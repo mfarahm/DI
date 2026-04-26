@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دعوة مناقشة رسالة دكتوراه – محمد فرح متولي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:        #1C1410;
+  --parchment:  #F7F0E6;
+  --cream:      #EDE4D4;
+  --gold:       #C9953A;
+  --gold-light: #E8B84B;
+  --gold-pale:  #F5DFA0;
+  --royal:      #3B1F6E;
+  --royal-mid:  #5A3A9A;
+  --royal-light:#8B6CC4;
+  --crimson:    #8B1A1A;
+  --teal:       #0E6B6B;
+  --text-main:  #2A1F0E;
+  --text-sec:   #6B5B3E;
+  --card-bg:    rgba(247,240,230,0.92);
+  --border-gold:rgba(201,149,58,0.5);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body {
+  font-family:'Cairo',sans-serif;
+  background-color:#1C1410;
+  color:var(--text-main);
+  overflow-x:hidden;
+  min-height:100vh;
+  position:relative;
+}
+
+/* ═══ LAYERED BACKGROUND ═══ */
+.bg-canvas {
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, #3B1F6E22 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 10% 100%, #C9953A18 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 50%, #8B1A1A12 0%, transparent 60%),
+    linear-gradient(175deg, #251508 0%, #1C1410 40%, #0D0A06 100%);
+}
+
+/* Islamic geometric SVG pattern overlay */
+.bg-pattern {
+  position:fixed;inset:0;z-index:0;
+  opacity:0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='none' stroke='%23C9953A' stroke-width='0.8'%3E%3Cpolygon points='40,4 76,22 76,58 40,76 4,58 4,22'/%3E%3Cpolygon points='40,14 66,28 66,52 40,66 14,52 14,28'/%3E%3Cpolygon points='40,24 56,33 56,47 40,56 24,47 24,33'/%3E%3Cline x1='40' y1='4' x2='40' y2='76'/%3E%3Cline x1='4' y1='22' x2='76' y2='58'/%3E%3Cline x1='76' y1='22' x2='4' y2='58'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:80px 80px;
+}
+
+/* Gold dust particles */
+.particles-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{
+  position:absolute;border-radius:50%;
+  background:radial-gradient(circle, var(--gold-light), transparent);
+  animation:rise linear infinite;
+  opacity:0;
+}
+@keyframes rise{
+  0%{transform:translateY(100vh) scale(0);opacity:0}
+  5%{opacity:.6}
+  90%{opacity:.3}
+  100%{transform:translateY(-10vh) scale(1);opacity:0}
+}
+
+/* ═══ PAGE WRAPPER ═══ */
+.page-wrapper{
+  position:relative;z-index:1;
+  max-width:1000px;margin:0 auto;
+  padding:24px 18px 0;
+}
+
+/* ═══ ORNAMENT DIVIDER ═══ */
+.ornament{
+  display:flex;align-items:center;gap:12px;
+  margin:6px 0;color:var(--gold);font-size:1.1rem;
+  text-align:center;justify-content:center;
+}
+.ornament::before,.ornament::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* ═══ HEADER ═══ */
+.header-bar{
+  background:linear-gradient(135deg,rgba(59,31,110,0.55),rgba(28,20,16,0.9));
+  border:1px solid var(--border-gold);
+  border-radius:20px;
+  padding:20px 28px;
+  display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(16px);
+  box-shadow:0 8px 60px rgba(201,149,58,0.15), inset 0 1px 0 rgba(232,184,75,0.2);
+  margin-bottom:10px;
+  position:relative;overflow:hidden;
+}
+.header-bar::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(201,149,58,0.05) 50%,transparent 100%);
+  animation:shimmer 4s ease-in-out infinite;
+}
+@keyframes shimmer{0%,100%{opacity:0}50%{opacity:1}}
+
+.uni-info{text-align:right;}
+.uni-info .uni-name{
+  font-family:'Scheherazade New',serif;font-size:1.5rem;font-weight:700;
+  color:var(--gold-light);line-height:1.7;
+  text-shadow:0 0 30px rgba(232,184,75,0.6);
+}
+.uni-info .uni-sub{font-size:.82rem;color:rgba(232,184,75,0.65);line-height:1.8;}
+
+.logos{display:flex;gap:12px;align-items:center;}
+.logo-circle{
+  width:68px;height:68px;border-radius:50%;
+  border:2px solid var(--gold);overflow:hidden;position:relative;
+  box-shadow:0 0 0 4px rgba(201,149,58,.12),0 0 20px rgba(201,149,58,.5);
+  animation:logoPulse 3.5s ease-in-out infinite;cursor:pointer;
+}
+.logo-circle img{width:100%;height:100%;object-fit:cover;display:block;}
+.logo-circle .shine{position:absolute;inset:0;border-radius:50%;background:conic-gradient(transparent 0deg,rgba(255,255,255,.18) 60deg,transparent 120deg);animation:shineRotate 4s linear infinite;}
+.logo-circle.royal-ring{border-color:var(--royal-light);box-shadow:0 0 0 4px rgba(90,58,154,.12),0 0 20px rgba(139,108,196,.5);animation:logoPulseRoyal 3.5s ease-in-out infinite;}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 0 4px rgba(201,149,58,.12),0 0 20px rgba(201,149,58,.4)}50%{box-shadow:0 0 0 6px rgba(201,149,58,.2),0 0 36px rgba(232,184,75,.8),0 0 60px rgba(201,149,58,.2)}}
+@keyframes logoPulseRoyal{0%,100%{box-shadow:0 0 0 4px rgba(90,58,154,.12),0 0 20px rgba(139,108,196,.4)}50%{box-shadow:0 0 0 6px rgba(90,58,154,.2),0 0 36px rgba(139,108,196,.8),0 0 60px rgba(90,58,154,.2)}}
+@keyframes shineRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
+/* ═══ INVITE TITLE ═══ */
+.invite-title-wrap{text-align:center;padding:20px 0 12px;}
+.invite-img{max-width:200px;width:88%;height:auto;display:inline-block;
+  filter:drop-shadow(0 0 20px rgba(201,149,58,.6));}
+
+/* ═══ ANNOUNCEMENT ═══ */
+.announcement{
+  background:linear-gradient(135deg,rgba(59,31,110,0.35),rgba(28,20,16,0.7));
+  border:1px solid var(--border-gold);
+  border-radius:16px;padding:26px 34px;
+  text-align:center;margin-bottom:14px;
+  position:relative;overflow:hidden;
+}
+/* Corner ornaments */
+.announcement::before,.announcement::after{
+  content:'✦';position:absolute;
+  font-size:1.6rem;color:var(--gold);opacity:.5;
+}
+.announcement::before{top:10px;right:14px;}
+.announcement::after{bottom:10px;left:14px;}
+.announcement p{
+  font-size:1.05rem;line-height:2.2;
+  color:rgba(247,240,230,0.88);
+  font-family:'Cairo',sans-serif;font-weight:400;
+}
+
+/* ═══ THESIS CARD ═══ */
+.thesis-card{
+  background:linear-gradient(145deg,rgba(59,31,110,0.5),rgba(28,20,16,0.85),rgba(59,31,110,0.3));
+  border:2px solid var(--gold);
+  border-radius:20px;padding:34px 40px;
+  text-align:center;margin:16px 0;
+  position:relative;
+  box-shadow:
+    0 0 0 1px rgba(232,184,75,.1),
+    0 0 50px rgba(201,149,58,.2),
+    inset 0 0 80px rgba(201,149,58,.05);
+}
+/* Arabesque corner decoration */
+.thesis-card::before{
+  content:'❧';position:absolute;top:12px;right:18px;
+  font-size:2rem;color:var(--gold);opacity:.4;
+}
+.thesis-card::after{
+  content:'❦';position:absolute;bottom:12px;left:18px;
+  font-size:2rem;color:var(--gold);opacity:.4;
+}
+/* Gold top bar */
+.thesis-card .top-rule{
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--gold-light),var(--gold),transparent);
+  border-radius:2px;margin-bottom:24px;
+  box-shadow:0 0 12px rgba(201,149,58,.5);
+}
+.thesis-card .bot-rule{
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--gold-light),var(--gold),transparent);
+  border-radius:2px;margin-top:24px;
+  box-shadow:0 0 12px rgba(201,149,58,.5);
+}
+.thesis-title{
+  font-family:'Scheherazade New',serif;
+  font-size:1.65rem;font-weight:700;
+  color:rgba(247,240,230,0.95);
+  line-height:2;
+  text-shadow:0 2px 24px rgba(201,149,58,.25);
+}
+.thesis-title .highlight{
+  color:var(--gold-light);
+  text-shadow:0 0 24px rgba(232,184,75,.7);
+}
+
+/* ═══ RESEARCHER ═══ */
+.researcher-section{text-align:center;margin:24px 0 12px;}
+.researcher-section .label{
+  font-size:.82rem;color:var(--gold);margin-bottom:16px;
+  letter-spacing:3px;font-weight:600;
+}
+.researcher-card{display:inline-flex;flex-direction:column;align-items:center;gap:10px;}
+.researcher-name{
+  font-family:'Scheherazade New',serif;font-size:1.55rem;font-weight:700;
+  color:var(--gold-light);text-shadow:0 0 18px rgba(232,184,75,.5);
+}
+.researcher-title{font-size:.82rem;color:rgba(232,184,75,.65);line-height:1.7;}
+
+.photo-wrap{
+  position:relative;display:inline-block;border-radius:50%;
+  border:2px solid var(--gold);overflow:hidden;
+  animation:personPulse 3.5s ease-in-out infinite;
+}
+.photo-wrap.royal-anim{border-color:var(--royal-light);animation:personPulseRoyal 3.5s ease-in-out infinite;}
+@keyframes personPulse{0%,100%{box-shadow:0 0 0 4px rgba(201,149,58,.15),0 0 22px rgba(201,149,58,.4)}50%{box-shadow:0 0 0 6px rgba(201,149,58,.25),0 0 38px rgba(232,184,75,.8),0 0 65px rgba(201,149,58,.2)}}
+@keyframes personPulseRoyal{0%,100%{box-shadow:0 0 0 4px rgba(90,58,154,.15),0 0 22px rgba(139,108,196,.4)}50%{box-shadow:0 0 0 6px rgba(90,58,154,.25),0 0 38px rgba(139,108,196,.8),0 0 65px rgba(90,58,154,.2)}}
+.photo-wrap img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover;}
+.photo-wrap .shine-ring{position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(transparent 0deg,rgba(255,255,255,.22) 60deg,transparent 120deg);animation:shineRotate 3s linear infinite;pointer-events:none;}
+.photo-wrap.researcher-size{width:124px;height:124px;}
+.photo-wrap.member-size{width:96px;height:96px;margin:0 auto 10px;}
+
+/* ═══ SECTION HEADER ═══ */
+.section-header{text-align:center;margin:28px 0 16px;position:relative;}
+.section-header h3{
+  display:inline-block;
+  font-family:'Scheherazade New',serif;
+  font-size:1.15rem;font-weight:700;
+  color:var(--gold-light);
+  padding:6px 24px;
+  background:linear-gradient(135deg,rgba(59,31,110,0.6),rgba(28,20,16,0.9));
+  border:1px solid var(--border-gold);
+  border-radius:30px;
+  position:relative;z-index:1;
+  box-shadow:0 0 20px rgba(201,149,58,.15);
+  letter-spacing:2px;
+}
+.section-header::before{
+  content:'';position:absolute;top:50%;left:5%;right:5%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* ═══ COMMITTEE GRID ═══ */
+.committee-grid{
+  display:flex;flex-wrap:nowrap;justify-content:center;
+  gap:14px;margin-bottom:8px;
+  max-width:1000px;margin-left:auto;margin-right:auto;
+}
+.member-card{
+  background:linear-gradient(145deg,rgba(59,31,110,0.25),rgba(28,20,16,0.75));
+  border:1px solid var(--border-gold);
+  border-radius:16px;
+  padding:18px 16px;
+  text-align:center;transition:all .35s ease;
+  position:relative;overflow:hidden;
+  width:230px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.member-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-light),transparent);
+  opacity:.6;
+}
+.member-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:.3;
+}
+.member-card:hover{
+  border-color:var(--gold-light);
+  background:linear-gradient(145deg,rgba(59,31,110,0.45),rgba(28,20,16,0.85));
+  box-shadow:0 0 40px rgba(201,149,58,.3),inset 0 0 30px rgba(201,149,58,.05);
+  transform:translateY(-5px);
+}
+.member-name{
+  font-family:'Scheherazade New',serif;font-size:1rem;font-weight:700;
+  color:rgba(247,240,230,0.92);line-height:1.6;margin-bottom:4px;
+}
+.member-role{font-size:.78rem;color:var(--gold);line-height:1.5;margin-bottom:3px;}
+.member-uni{font-size:.75rem;color:rgba(232,184,75,.55);line-height:1.5;}
+.member-role-bold{
+  font-size:.8rem;color:var(--royal-light);
+  line-height:1.5;margin-top:5px;font-weight:700;
+  border-top:1px solid rgba(201,149,58,.25);
+  padding-top:5px;width:100%;
+}
+
+/* ═══ INFO BOXES ═══ */
+.event-info-wrapper{margin:20px 0 0;}
+.event-info-row1{display:flex;gap:12px;justify-content:center;margin-bottom:10px;flex-wrap:nowrap;}
+.event-info-row2{display:flex;justify-content:center;}
+
+.event-info-item{
+  display:flex;align-items:center;gap:12px;
+  justify-content:center;text-align:center;
+  background:linear-gradient(135deg,rgba(59,31,110,0.3),rgba(28,20,16,0.75));
+  border:1px solid var(--border-gold);
+  padding:14px 18px;border-radius:14px;
+  box-shadow:0 4px 24px rgba(201,149,58,.1);
+  transition:all .3s;
+}
+.event-info-item:hover{border-color:var(--gold-light);box-shadow:0 0 30px rgba(201,149,58,.25);}
+.event-info-item.date-box,.event-info-item.time-box{flex:1;min-height:64px;}
+.event-info-item.loc-box{flex:1;min-height:64px;width:100%;}
+
+.event-info-icon{font-size:1.4rem;flex-shrink:0;color:var(--gold);}
+.event-info-val{font-size:.82rem;font-weight:400;color:rgba(247,240,230,0.85);line-height:1.4;display:block;}
+.event-info-val-gold{font-size:.88rem;font-weight:600;color:var(--gold-light);line-height:1.4;display:block;}
+
+/* ═══ MAP ═══ */
+.map-box{
+  margin:12px 0 0;border-radius:16px;overflow:hidden;
+  border:1px solid var(--border-gold);
+  box-shadow:0 0 30px rgba(201,149,58,.15);
+  height:160px;position:relative;
+}
+.map-box iframe{width:100%;height:100%;border:0;display:block;}
+.map-label{
+  position:absolute;bottom:0;right:0;left:0;
+  background:linear-gradient(transparent,rgba(28,20,16,.88));
+  padding:8px 14px;font-size:.75rem;
+  color:var(--gold);text-align:center;
+}
+
+/* ═══ COUNTDOWN ═══ */
+.countdown-section{
+  background:linear-gradient(135deg,rgba(59,31,110,0.4),rgba(28,20,16,0.8));
+  border:1px solid var(--border-gold);
+  border-radius:18px;padding:22px;
+  text-align:center;margin:20px 0;
+  box-shadow:0 0 50px rgba(201,149,58,.12),inset 0 0 60px rgba(201,149,58,.03);
+  position:relative;overflow:hidden;
+}
+.countdown-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-light),var(--gold),var(--gold-light),transparent);
+  box-shadow:0 0 15px rgba(201,149,58,.6);
+}
+.countdown-done{
+  font-family:'Scheherazade New',serif;font-size:1.4rem;
+  color:var(--gold-light);text-shadow:0 0 20px rgba(232,184,75,.5);
+  padding:10px 0;
+}
+.countdown-grid{display:flex;flex-direction:row;justify-content:center;gap:10px;}
+.count-box{
+  background:linear-gradient(145deg,rgba(59,31,110,0.4),rgba(28,20,16,0.9));
+  border:1px solid rgba(201,149,58,.4);
+  border-radius:12px;padding:10px 14px;
+  min-width:68px;
+  box-shadow:0 0 16px rgba(201,149,58,.12),inset 0 1px 0 rgba(232,184,75,.15);
+}
+.count-num{
+  font-family:'Cairo',sans-serif;font-size:1.7rem;font-weight:900;
+  color:var(--gold-light);display:block;line-height:1;margin-bottom:4px;
+  text-shadow:0 0 12px rgba(232,184,75,.6);letter-spacing:1px;
+}
+.count-label{font-size:.6rem;color:rgba(232,184,75,.55);letter-spacing:1.5px;font-weight:600;}
+
+/* ═══ CONGRATS BOX ═══ */
+.congrats-box{
+  background:linear-gradient(145deg,rgba(59,31,110,0.35),rgba(28,20,16,0.85));
+  border:1px solid var(--border-gold);
+  border-radius:20px;padding:32px;
+  margin-top:36px;
+  box-shadow:0 0 50px rgba(201,149,58,.1),inset 0 0 60px rgba(201,149,58,.03);
+}
+.congrats-box h4{
+  text-align:center;
+  font-family:'Scheherazade New',serif;font-size:1.4rem;
+  color:var(--gold-light);margin-bottom:22px;
+  text-shadow:0 0 20px rgba(232,184,75,.4);
+}
+.input-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
+.input-row input[type="text"]{
+  background:rgba(28,20,16,0.6);
+  border:1px solid rgba(201,149,58,.35);
+  border-radius:10px;padding:12px 18px;
+  color:rgba(247,240,230,0.85);
+  font-family:'Cairo',sans-serif;outline:none;font-size:1rem;width:100%;
+  transition:border-color .25s,box-shadow .25s;
+}
+.input-row input[type="text"]:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 16px rgba(201,149,58,.3);
+}
+textarea#congrats-text{
+  width:100%;min-height:80px;
+  background:rgba(28,20,16,0.6);
+  border:1px solid rgba(201,149,58,.35);
+  border-radius:10px;padding:12px 18px;
+  color:rgba(247,240,230,0.88);
+  font-family:'Cairo',sans-serif;outline:none;font-size:1rem;resize:vertical;line-height:1.7;
+  transition:border-color .25s,box-shadow .25s;
+}
+textarea#congrats-text:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 16px rgba(201,149,58,.3);
+}
+.congrats-send-row{display:flex;justify-content:center;margin-top:10px;}
+.congrats-btn{
+  background:linear-gradient(135deg,var(--gold),var(--gold-light),var(--gold));
+  background-size:200% auto;
+  color:var(--ink);border:none;border-radius:10px;
+  padding:8px 0;font-weight:700;cursor:pointer;
+  transition:all .3s ease;
+  font-family:'Cairo',sans-serif;font-size:.95rem;width:100%;
+  box-shadow:0 4px 20px rgba(201,149,58,.4);
+  animation:goldShift 4s ease-in-out infinite;
+}
+@keyframes goldShift{0%,100%{background-position:0% center}50%{background-position:100% center}}
+.congrats-btn:hover{transform:scale(1.02);box-shadow:0 6px 28px rgba(201,149,58,.6);}
+
+#congrats-list{
+  margin-top:16px;max-height:500px;overflow-y:auto;overflow-x:hidden;
+  margin-left:-14px;margin-right:-14px;
+  padding-left:14px;padding-right:14px;
+}
+#congrats-list::-webkit-scrollbar{width:5px;}
+#congrats-list::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:10px;}
+#congrats-list::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
+
+.c-item{
+  background:rgba(28,20,16,0.5);
+  border-radius:10px;padding:14px;margin-bottom:10px;
+  border-right:3px solid var(--gold);width:100%;
+}
+.c-name{display:block;font-weight:700;color:var(--gold-light);font-size:.9rem;text-align:right;margin-bottom:4px;}
+.c-text{font-size:.92rem;line-height:1.7;margin-bottom:6px;word-break:break-word;white-space:pre-wrap;text-align:right;direction:rtl;color:rgba(247,240,230,0.85);}
+.c-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;direction:ltr;justify-content:flex-start;}
+.c-time{font-size:.7rem;color:rgba(232,184,75,.5);}
+.c-edited{font-size:.68rem;color:var(--gold);}
+.c-btns{display:flex;gap:6px;justify-content:center;margin-top:8px;}
+.c-btn-edit{background:rgba(90,58,154,.25);border:1px solid var(--royal-light);color:var(--royal-light);border-radius:6px;padding:3px 12px;font-size:.7rem;cursor:pointer;font-family:'Cairo',sans-serif;}
+.c-btn-del{background:rgba(139,26,26,.25);border:1px solid var(--crimson);color:#E06060;border-radius:6px;padding:3px 12px;font-size:.7rem;cursor:pointer;font-family:'Cairo',sans-serif;}
+
+/* ═══ SHARE ═══ */
+.share-section{text-align:center;margin:30px 0;}
+.share-title{font-size:.78rem;color:var(--gold);margin-bottom:14px;letter-spacing:3px;font-weight:600;}
+.share-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:nowrap;}
+.share-btn{
+  text-decoration:none;width:52px;height:52px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:all .3s ease;flex-shrink:0;overflow:hidden;
+  background:transparent;border:none;
+  box-shadow:0 0 16px rgba(201,149,58,.15);
+}
+.share-btn img{width:50px;height:50px;object-fit:contain;border-radius:6px;}
+.share-btn:hover{transform:translateY(-4px) scale(1.12);box-shadow:0 8px 24px rgba(201,149,58,.35);}
+
+/* ═══ ADMIN ═══ */
+.admin-wrap{text-align:center;margin-bottom:16px;}
+
+/* ═══ FOOTER ═══ */
+.footer-bar{
+  text-align:center;padding:18px 0 14px;
+  border-top:1px solid rgba(201,149,58,.2);
+  margin-top:22px;
+}
+.footer-bar .copy{font-size:.68rem;color:rgba(232,184,75,.45);}
+.footer-bar .copy span{color:var(--gold);font-weight:700;}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  .header-bar{flex-direction:column;gap:16px;text-align:center;}
+  .uni-info{text-align:center;}
+  .logos{justify-content:center;}
+  .thesis-title{font-size:1.45rem;}
+  .committee-grid{flex-wrap:wrap;}
+  .event-info-row1{flex-wrap:wrap;}
+  .event-info-item.date-box,.event-info-item.time-box{max-width:100%;width:100%;}
+  .event-info-item.loc-box{max-width:100%;}
+  .share-buttons{flex-wrap:wrap;}
+  .count-num{font-size:1.35rem;}
+  .count-box{min-width:56px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-canvas"></div>
+<div class="bg-pattern"></div>
+<div class="particles-wrap" id="particles-wrap"></div>
+
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="header-bar">
+    <div class="uni-info">
+      <div class="uni-name">جامعة الأزهر</div>
+      <div class="uni-sub">كلية التربية بنين بالقاهرة<br>قسم أصول التربية</div>
+    </div>
+    <div class="logos">
+      <div class="logo-circle">
+        <img src="images/uni_logo.png" alt="جامعة الأزهر">
+        <div class="shine"></div>
+      </div>
+      <div class="logo-circle royal-ring">
+        <img src="images/college_logo.png" alt="كلية التربية">
+        <div class="shine"></div>
+      </div>
+      <div class="logo-circle">
+        <img src="images/dept_logo.png" alt="قسم أصول التربية">
+        <div class="shine"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVITATION TITLE -->
+  <div class="invite-title-wrap">
+    <img src="images/invite_text.png" alt="دعوة" class="invite-img">
+  </div>
+
+  <!-- ANNOUNCEMENT -->
+  <div class="announcement">
+    <p>
+      يسر قسم أصول التربية بكلية التربية بنين بالقاهرة – جامعة الأزهر
+      أن يدعوكم لحضور مناقشة رسالة العالمية <strong style="color:var(--gold-light);">دكتوراه الفلسفة</strong> في التربية، تخصص <strong style="color:var(--royal-light);">(أصول التربية)</strong>، وعنوانها:
+    </p>
+  </div>
+
+  <!-- THESIS CARD -->
+  <div class="thesis-card">
+    <div class="top-rule"></div>
+    <div class="thesis-title">
+      استراتيجية مقترحة لتوظيف
+      <br>
+      <span class="highlight">روبوتات المحادثة Chatbots</span>
+      <br>
+      في التعليم الجامعي بمصر من منظور
+      <br>
+      <span class="highlight">فلسفة الذكاء الاصطناعي المسؤول</span>
+    </div>
+    <div class="bot-rule"></div>
+  </div>
+
+  <!-- RESEARCHER -->
+  <div class="researcher-section">
+    <div class="label">المقدمة من الباحث/</div>
+    <div class="researcher-card">
+      <div class="photo-wrap researcher-size">
+        <img src="images/researcher1.png" alt="محمد فرح">
+        <div class="shine-ring"></div>
+      </div>
+      <div class="researcher-name">محمد فرح محمد متولي</div>
+      <div class="researcher-title">المدرس المساعد بقسم أصول التربية
+        <div class="researcher-title">كلية التربية بنين بالقاهرة - جامعة الأزهر</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPERVISION -->
+  <div class="section-header"><h3>◈ لجنة الإشراف ◈</h3></div>
+  <div class="committee-grid">
+    <div class="member-card">
+      <div class="photo-wrap member-size royal-anim">
+        <img src="images/per1.png" alt="مشرف">
+        <div class="shine-ring"></div>
+      </div>
+      <div class="member-name">أ.د/ أحمد سمير فوزي عبد الله</div>
+      <div class="member-role">أستاذ أصول التربية</div>
+      <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+    </div>
+    <div class="member-card">
+      <div class="photo-wrap member-size royal-anim">
+        <img src="images/per2.png" alt="مشرف">
+        <div class="shine-ring"></div>
+      </div>
+      <div class="member-name">د/ ياسر علي علي عبد الغني</div>
+      <div class="member-role">أستاذ تكنولوجيا التعليم المساعد</div>
+      <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+    </div>
+    <div class="member-card">
+      <div class="photo-wrap member-size royal-anim">
+        <img src="images/per3.png" alt="مشرف">
+        <div class="shine-ring"></div>
+      </div>
+      <div class="member-name">د/ جمال عبد الحميد أحمد عبد السميع</div>
+      <div class="member-role">مدرس أصول التربية</div>
+      <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+    </div>
+  </div>
+
+  <!-- DISCUSSION COMMITTEE -->
+  <div class="section-header"><h3>◈ لجنة المناقشة والحكم ◈</h3></div>
+  <div class="committee-grid">
+    <div class="member-card">
+      <div class="photo-wrap member-size">
+        <img src="images/per1.png" alt="مناقش">
+        <div class="shine-ring"></div>
+      </div>
+      <div class="member-name">أ.د/ أحمد سمير فوزي عبد الله</div>
+      <div class="member-role">أستاذ أصول التربية</div>
+      <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+      <div class="member-role-bold">(مشرفًا ورئيسًا)</div>
+    </div>
+    <div class="member-card">
+      <div class="photo-wrap member-size">
+        <img src="images/perso1.png" alt="مناقش">
+        <div class="shine-ring"></div>
+      </div>
+      <div class="member-name">أ.د/ محمود عبد اللطيف السيد</div>
+      <div class="member-role">أستاذ أصول التربية</div>
+      <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+      <div class="member-role-bold">(مشرفًا ورئيسًا)</div>
+    </div>
+    <div class="member-card">
+      <div class="photo-wrap member-size">
+        <img src="images/perso2.png" alt="مناقش">
+        <div class="shine-ring"></div>
+      </div>
+      <div class="member-name">أ.د/ نسمة محمد عبد السلام</div>
+      <div class="member-role">أستاذ أصول التربية</div>
+      <div class="member-uni">كلية التربية<br>جامعة عين شمس</div>
+      <div class="member-role-bold">(مشرفًا ورئيسًا)</div>
+    </div>
+    <div class="member-card">
+      <div class="photo-wrap member-size">
+        <img src="images/per2.png" alt="مناقش">
+        <div class="shine-ring"></div>
+      </div>
+      <div class="member-name">د/ ياسر علي علي عبد الغني</div>
+      <div class="member-role">أستاذ تكنولوجيا التعليم المساعد</div>
+      <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+      <div class="member-role-bold">(مشرفًا ورئيسًا)</div>
+    </div>
+  </div>
+
+  <div class="section-header"><h3>◈ موعد المناقشة وموقعها ◈</h3></div>
+
+  <!-- EVENT INFO BOXES -->
+  <div class="event-info-wrapper">
+    <div class="event-info-row1">
+      <div class="event-info-item date-box">
+        <div class="event-info-icon date">📅</div>
+        <div>
+          <span class="event-info-val">يوم الخميس</span>
+          <span class="event-info-val">17/10/2026</span>
+        </div>
+      </div>
+      <div class="event-info-item time-box">
+        <div class="event-info-icon time">🕛</div>
+        <div>
+          <span class="event-info-val">الساعة</span>
+          <span class="event-info-val">12:00 ظهرًا</span>
+        </div>
+      </div>
+    </div>
+    <div class="event-info-row2">
+      <div class="event-info-item loc-box">
+        <div class="event-info-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="var(--gold)" style="display:block;">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="event-info-val-gold">كلية التربية بنين بالقاهرة - جامعة الأزهر</span>
+          <span class="event-info-val">قاعة المناقشات (أ)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP BOX -->
+  <div class="map-box">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.158757263557!2d31.31253552474634!3d30.060983517787463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e535c536a25%3A0xe8046d566ecd3e58!2z2YPZhNmK2Kkg2KfZhNiq2LHYqNmK2Kkg2KjZhtmK2YYg2KzYp9mF2LnYqSDYp9mE2KPYstmH2LE!5e0!3m2!1sar!2seg!4v1777125767618!5m2!1sar!2seg" 
+      width="600" height="450" style="border:0;"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <div class="map-label">📍 كلية التربية بنين بالقاهرة – جامعة الأزهر</div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="section-header"><h3>◈ العد التنازلي للمناقشة ◈</h3></div>
+  <div class="countdown-section">
+    <div id="countdown-done" class="countdown-done" style="display:none;">تمت المناقشة بحمد الله وتوفيقه 🎓</div>
+    <div id="countdown-live">
+      <div class="countdown-grid">
+        <div class="count-box"><span class="count-num" id="days">00</span><span class="count-label">أيام</span></div>
+        <div class="count-box"><span class="count-num" id="hours">00</span><span class="count-label">ساعة</span></div>
+        <div class="count-box"><span class="count-num" id="minutes">00</span><span class="count-label">دقيقة</span></div>
+        <div class="count-box"><span class="count-num" id="seconds">00</span><span class="count-label">ثانية</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONGRATS BOX -->
+  <div class="congrats-box">
+    <h4>◈ اكتب تهنئة للباحث ◈</h4>
+    <div class="input-row">
+      <input id="congrats-name" type="text" placeholder="اسمك.. (اختياري)">
+    </div>
+    <textarea id="congrats-text" placeholder="اكتب تهنئتك هنا..."></textarea>
+    <div class="congrats-send-row">
+      <button class="congrats-btn" onclick="submitCongrats()">إرسال</button>
+    </div>
+    <div id="congrats-count" style="font-size:.8rem;color:var(--gold);margin:10px 0 4px;text-align:center;opacity:.7;"></div>
+    <div id="congrats-list"></div>
+  </div>
+
+  <!-- SHARE -->
+  <div class="share-section">
+    <div class="share-title">◈ شارك الدعوة ◈</div>
+    <div class="share-buttons">
+      <a class="share-btn" href="#" onclick="shareOn('facebook');return false;" title="Facebook">
+        <img src="images/facebook.png" alt="Facebook">
+      </a>
+      <a class="share-btn" href="#" onclick="shareOn('whatsapp');return false;" title="WhatsApp">
+        <img src="images/whatsapp.png" alt="WhatsApp">
+      </a>
+      <a class="share-btn" href="#" onclick="shareOn('x');return false;" title="X">
+        <img src="images/x.png" alt="X">
+      </a>
+      <a class="share-btn" href="#" onclick="shareOn('telegram');return false;" title="Telegram">
+        <img src="images/telegram.png" alt="Telegram">
+      </a>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div class="admin-wrap">
+    <div id="admin-status" style="margin-bottom:10px;font-size:.82rem;"></div>
+    <button id="admin-toggle-btn" onclick="showAdminLogin()"
+      style="background:transparent;border:1px solid rgba(201,149,58,.18);color:rgba(201,149,58,.3);border-radius:8px;padding:4px 14px;font-size:.65rem;cursor:pointer;"
+      onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+      onmouseout="this.style.borderColor='rgba(201,149,58,.18)';this.style.color='rgba(201,149,58,.3)'">⚙️ إدارة</button>
+    <div id="admin-login-box"
+      style="display:none;margin-top:14px;background:rgba(28,20,16,0.95);border:1px solid rgba(201,149,58,.4);border-radius:14px;padding:20px;max-width:340px;margin-left:auto;margin-right:auto;">
+      <p style="font-size:.85rem;color:var(--gold-light);margin-bottom:12px;">🔐 دخول المدير</p>
+      <input id="admin-pass-input" type="password" placeholder="كلمة السر..."
+        onkeydown="if(event.key==='Enter') adminLogin()"
+        style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(201,149,58,.35);border-radius:8px;padding:10px 14px;color:rgba(247,240,230,0.85);font-family:'Cairo',sans-serif;outline:none;margin-bottom:10px;">
+      <p id="admin-pass-error" style="display:none;color:#E06060;font-size:.75rem;margin-bottom:8px;">❌ كلمة السر غير صحيحة</p>
+      <div style="display:flex;gap:10px;">
+        <button onclick="adminLogin()" style="flex:1;background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:8px 0;font-family:'Cairo',sans-serif;font-weight:700;cursor:pointer;">دخول</button>
+        <button onclick="cancelAdminLogin()" style="flex:1;background:rgba(255,255,255,.05);color:rgba(232,184,75,.6);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 0;font-family:'Cairo',sans-serif;cursor:pointer;">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-bar">
+    <div class="copy">جميع حقوق الفكرة والبرمجة محفوظة © <span>محمد فرح 2026</span></div>
+  </div>
+
+</div>
+
+<!-- ══ FIREBASE ══ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, push, onValue, remove, update }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA5xYXrZrrwA6ws8WRyMr2dIHXlWBVn3FE",
+    authDomain: "aaaaaa-5b453.firebaseapp.com",
+    databaseURL: "https://aaaaaa-5b453-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "aaaaaa-5b453",
+    storageBucket: "aaaaaa-5b453.firebasestorage.app",
+    messagingSenderId: "722031681124",
+    appId: "1:722031681124:web:0d45ca14b0413d9954c971"
+  };
+
+  const ADMIN_PASSWORD = "333555";
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
+  const congratsRef = ref(db, "congrats");
+
+  let myToken = localStorage.getItem("congrats_token");
+  if (!myToken) { myToken = "tk_" + Math.random().toString(36).slice(2) + Date.now(); localStorage.setItem("congrats_token", myToken); }
+
+  let isAdmin = sessionStorage.getItem("admin_logged") === "yes";
+
+  window.submitCongrats = function () {
+    const nameEl = document.getElementById("congrats-name");
+    const textEl = document.getElementById("congrats-text");
+    const name = nameEl.value.trim() || "زائر";
+    const text = textEl.value.trim();
+    if (!text) { alert("من فضلك اكتب التهنئة"); return; }
+    push(congratsRef, { name, text, time: new Date().toLocaleString("ar-EG"), ts: Date.now(), token: myToken });
+    nameEl.value = ""; textEl.value = "";
+  };
+
+  window.deleteCongrats = function (id, token) {
+    if (token !== myToken && !isAdmin) return;
+    if (confirm("هل تريد حذف هذه التهنئة؟")) remove(ref(db, "congrats/" + id));
+  };
+
+  window.editCongrats = function (id, oldText, token) {
+    if (token !== myToken) return;
+    const overlay = document.createElement("div");
+    overlay.style.cssText = "position:fixed;inset:0;background:rgba(28,20,16,.88);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;";
+    const box = document.createElement("div");
+    box.style.cssText = "background:#1C1410;border:1px solid rgba(201,149,58,.5);border-radius:16px;padding:24px;width:100%;max-width:520px;font-family:Cairo,sans-serif;direction:rtl;";
+    const title = document.createElement("p");
+    title.style.cssText = "color:var(--gold-light);font-size:.9rem;margin-bottom:12px;font-weight:700;";
+    title.textContent = "✏️ تعديل التهنئة";
+    const ta = document.createElement("textarea");
+    ta.value = oldText;
+    ta.style.cssText = "width:100%;min-height:160px;background:rgba(255,255,255,.04);border:1px solid rgba(201,149,58,.4);border-radius:10px;padding:12px 16px;color:rgba(247,240,230,0.88);font-family:Cairo,sans-serif;font-size:1rem;outline:none;resize:vertical;line-height:1.7;";
+    const btns = document.createElement("div");
+    btns.style.cssText = "display:flex;gap:10px;margin-top:14px;justify-content:flex-start;";
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "حفظ";
+    saveBtn.style.cssText = "background:#C9953A;color:#1C1410;border:none;border-radius:8px;padding:8px 24px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif;";
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "إلغاء";
+    cancelBtn.style.cssText = "background:rgba(255,255,255,.05);color:rgba(232,184,75,.6);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 18px;cursor:pointer;font-family:Cairo,sans-serif;";
+    saveBtn.onclick = function () {
+      const newText = ta.value.trim();
+      if (newText) update(ref(db, "congrats/" + id), { text: newText, edited: true });
+      document.body.removeChild(overlay);
+    };
+    cancelBtn.onclick = function () { document.body.removeChild(overlay); };
+    btns.appendChild(saveBtn); btns.appendChild(cancelBtn);
+    box.appendChild(title); box.appendChild(ta); box.appendChild(btns);
+    overlay.appendChild(box); document.body.appendChild(overlay);
+    setTimeout(function(){ ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }, 80);
+  };
+
+  function renderList(snap) {
+    const container = document.getElementById("congrats-list");
+    const countEl   = document.getElementById("congrats-count");
+    while (container.firstChild) container.removeChild(container.firstChild);
+    if (!snap || !snap.exists()) {
+      const p = document.createElement("p");
+      p.style.cssText = "text-align:center;color:rgba(232,184,75,.5);padding:20px;";
+      p.textContent = "كن أول من يهنئ الباحث 🎉";
+      container.appendChild(p); countEl.textContent = ""; return;
+    }
+    const items = [];
+    snap.forEach(function(child){ const v = child.val(); v._id = child.key; items.push(v); });
+    items.reverse();
+    countEl.textContent = "◈ عدد التعليقات: " + items.length + " ◈";
+
+    for (let i = 0; i < items.length; i++) {
+      const c = items[i];
+      const isOwner = (c.token === myToken);
+      const wrap = document.createElement("div");
+      wrap.className = "c-item";
+
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "c-name";
+      nameSpan.textContent = "👤 " + (c.name || "زائر");
+      wrap.appendChild(nameSpan);
+
+      const textDiv = document.createElement("div");
+      textDiv.className = "c-text";
+      textDiv.textContent = c.text || "";
+      wrap.appendChild(textDiv);
+
+      const metaDiv = document.createElement("div");
+      metaDiv.className = "c-meta";
+      const timeSpan = document.createElement("span");
+      timeSpan.className = "c-time";
+      timeSpan.textContent = c.time || "";
+      metaDiv.appendChild(timeSpan);
+      if (c.edited) {
+        const edSpan = document.createElement("span");
+        edSpan.className = "c-edited";
+        edSpan.textContent = "· (معدّل)";
+        metaDiv.appendChild(edSpan);
+      }
+      wrap.appendChild(metaDiv);
+
+      if (isOwner || isAdmin) {
+        const btns = document.createElement("div");
+        btns.className = "c-btns";
+        if (isOwner) {
+          const editBtn = document.createElement("button");
+          editBtn.className = "c-btn-edit";
+          editBtn.textContent = "✏️ تعديل";
+          const cId = c._id, cText = c.text, cToken = c.token;
+          editBtn.onclick = function() { window.editCongrats(cId, cText, cToken); };
+          btns.appendChild(editBtn);
+        }
+        const delBtn = document.createElement("button");
+        delBtn.className = "c-btn-del";
+        delBtn.textContent = "🗑️ حذف";
+        const cId2 = c._id, cToken2 = c.token;
+        delBtn.onclick = function() { window.deleteCongrats(cId2, cToken2); };
+        btns.appendChild(delBtn);
+        wrap.appendChild(btns);
+      }
+      container.appendChild(wrap);
+    }
+  }
+
+  onValue(congratsRef, function(snap) { renderList(snap); });
+
+  function updateAdminUI() {
+    document.getElementById("admin-status").innerHTML =
+      '<span style="color:#2ecc71">✅ أنت مسجل كمدير — يمكنك حذف أي تعليق</span> ' +
+      '<button onclick="adminLogout()" style="background:rgba(180,30,30,.3);border:1px solid #c0392b;color:#ff6b6b;border-radius:6px;padding:4px 14px;font-size:.75rem;cursor:pointer;font-family:Cairo,sans-serif;margin-right:8px;">تسجيل خروج</button>';
+    document.getElementById("admin-toggle-btn").style.display = "none";
+  }
+  window.adminLogin = function () {
+    const pass = document.getElementById("admin-pass-input").value;
+    if (pass === ADMIN_PASSWORD) {
+      isAdmin = true; sessionStorage.setItem("admin_logged","yes");
+      document.getElementById("admin-login-box").style.display = "none";
+      document.getElementById("admin-pass-error").style.display = "none";
+      updateAdminUI();
+      onValue(congratsRef, function(snap) { renderList(snap); });
+    } else { document.getElementById("admin-pass-error").style.display = "block"; }
+  };
+  window.adminLogout = function () {
+    isAdmin = false; sessionStorage.removeItem("admin_logged");
+    document.getElementById("admin-status").innerHTML = "";
+    document.getElementById("admin-toggle-btn").style.display = "inline-block";
+    onValue(congratsRef, function(snap) { renderList(snap); });
+  };
+  window.showAdminLogin = function () {
+    document.getElementById("admin-login-box").style.display = "block";
+    document.getElementById("admin-toggle-btn").style.display = "none";
+    setTimeout(function(){ document.getElementById("admin-pass-input").focus(); }, 100);
+  };
+  window.cancelAdminLogin = function () {
+    document.getElementById("admin-login-box").style.display = "none";
+    document.getElementById("admin-toggle-btn").style.display = "inline-block";
+    document.getElementById("admin-pass-input").value = "";
+    document.getElementById("admin-pass-error").style.display = "none";
+  };
+  if (isAdmin) { setTimeout(updateAdminUI, 300); }
+</script>
+
+<!-- ══ General Scripts ══ -->
+<script>
+// Gold dust particles
+const wrap = document.getElementById('particles-wrap');
+for(let i=0;i<55;i++){
+  const dot=document.createElement('div');
+  dot.className='particle';
+  const size=Math.random()*3+1.5;
+  dot.style.width=size+'px';dot.style.height=size+'px';
+  dot.style.left=Math.random()*100+'vw';
+  dot.style.animationDuration=(Math.random()*14+12)+'s';
+  dot.style.animationDelay=(Math.random()*8)+'s';
+  wrap.appendChild(dot);
+}
+
+// Countdown
+const targetDate=new Date('2026-10-17T12:00:00').getTime();
+function updateCountdown(){
+  const now=new Date().getTime(),diff=targetDate-now;
+  if(diff<=0){document.getElementById('countdown-live').style.display='none';document.getElementById('countdown-done').style.display='block';return;}
+  document.getElementById('days').innerText=Math.floor(diff/(1000*60*60*24)).toString().padStart(2,'0');
+  document.getElementById('hours').innerText=Math.floor((diff%(1000*60*60*24))/(1000*60*60)).toString().padStart(2,'0');
+  document.getElementById('minutes').innerText=Math.floor((diff%(1000*60*60))/(1000*60)).toString().padStart(2,'0');
+  document.getElementById('seconds').innerText=Math.floor((diff%(1000*60))/1000).toString().padStart(2,'0');
+}
+setInterval(updateCountdown,1000);updateCountdown();
+
+// Share
+function shareOn(platform){
+  const url=window.location.href;
+  const text="تصفح الدعوة الإلكترونية لمناقشة رسالة الدكتوراه - محمد فرح متولي";
+  let s='';
+  if(platform==='facebook') s='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+  if(platform==='x')        s='https://twitter.com/intent/tweet?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text);
+  if(platform==='whatsapp') s='https://api.whatsapp.com/send?text='+encodeURIComponent(text+' '+url);
+  if(platform==='telegram') s='https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text);
+  window.open(s,'_blank');
+}
+</script>
+</body>
+</html>

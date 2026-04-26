@@ -1,0 +1,778 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة مناقشة رسالة دكتوراه – محمد فرح متولي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;600;700&amp;family=Amiri:wght@400;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #F8F4ED;
+            --bg-soft: #F0E9E0;
+            --accent-gold: #D4A017;
+            --deep-navy: #1E3A5F;
+            --soft-rose: #C89A9A;
+            --mint-soft: #A8C4B0;
+            --text-main: #2C2C2C;
+            --text-light: #555555;
+            --glow-gold: rgba(212, 160, 23, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* خلفية فاخرة ناعمة مع أنماط إسلامية خفيفة */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212,160,23,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(200,154,154,0.05) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(168,196,176,0.03) 1px, transparent 1px);
+            background-size: 120px 120px;
+            opacity: 0.6;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* تأثير نثر الورود الخفيف (حركة تهنئة ناعمة) */
+        .floral-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .rose-particle {
+            position: absolute;
+            font-size: 18px;
+            color: var(--soft-rose);
+            opacity: 0.12;
+            animation: roseFloat linear infinite;
+            text-shadow: 0 0 8px var(--glow-gold);
+        }
+
+        @keyframes roseFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.12; }
+            90% { opacity: 0.12; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        .page-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* هيدر فاخر أكاديمي */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 32px;
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(212,160,23,0.3);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(30,58,95,0.08);
+            backdrop-filter: blur(12px);
+            margin-bottom: 32px;
+        }
+
+        .uni-info {
+            text-align: right;
+        }
+
+        .uni-name {
+            font-family: 'Amiri', serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--deep-navy);
+            letter-spacing: 1px;
+        }
+
+        .uni-sub {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .logos {
+            display: flex;
+            gap: 16px;
+        }
+
+        .logo-circle {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-gold);
+            overflow: hidden;
+            box-shadow: 0 0 0 6px rgba(212,160,23,0.1),
+                        0 8px 25px rgba(30,58,95,0.15);
+            transition: all 0.4s ease;
+        }
+
+        .logo-circle:hover {
+            transform: scale(1.08) rotate(8deg);
+            box-shadow: 0 0 0 8px rgba(212,160,23,0.25);
+        }
+
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* عنوان الدعوة بتأثير glow ذهبي */
+        .invite-title-wrap {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .invite-img {
+            max-width: 240px;
+            filter: drop-shadow(0 10px 20px rgba(212,160,23,0.3));
+        }
+
+        /* إعلان رئيسي أنيق */
+        .announcement {
+            background: linear-gradient(135deg, #FFFFFF, #F8F4ED);
+            border: 2px solid var(--accent-gold);
+            border-radius: 22px;
+            padding: 32px 40px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(30,58,95,0.1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .announcement::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(212,160,23,0.07), transparent);
+            animation: shineMove 8s linear infinite;
+        }
+
+        @keyframes shineMove {
+            0% { transform: translateX(-150%); }
+            100% { transform: translateX(150%); }
+        }
+
+        .announcement p {
+            font-size: 1.15rem;
+            line-height: 2.1;
+            color: var(--deep-navy);
+            position: relative;
+        }
+
+        /* بطاقة الرسالة – تصميم فاخر جديد */
+        .thesis-card {
+            background: linear-gradient(135deg, #FFFFFF, #F0E9E0);
+            border: 3px solid var(--accent-gold);
+            border-radius: 28px;
+            padding: 42px 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(212,160,23,0.18),
+                        inset 0 0 80px rgba(168,196,176,0.08);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .thesis-card::before {
+            content: '✦';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            background: var(--bg-light);
+            padding: 0 20px;
+        }
+
+        .thesis-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.72rem;
+            line-height: 2.05;
+            font-weight: 700;
+            color: var(--deep-navy);
+            text-shadow: 0 3px 15px rgba(212,160,23,0.25);
+        }
+
+        .thesis-title .highlight {
+            color: var(--accent-gold);
+            position: relative;
+        }
+
+        .thesis-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        /* قسم الباحث */
+        .researcher-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .researcher-card {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .photo-wrap {
+            width: 148px;
+            height: 148px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-gold);
+            overflow: hidden;
+            box-shadow: 0 0 0 10px rgba(212,160,23,0.15),
+                        0 15px 40px rgba(30,58,95,0.2);
+            position: relative;
+        }
+
+        .photo-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            border: 2px solid rgba(212,160,23,0.4);
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.6; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.08); }
+        }
+
+        .photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .researcher-name {
+            font-family: 'Amiri', serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--deep-navy);
+        }
+
+        .researcher-title {
+            font-size: 1rem;
+            color: var(--text-light);
+            max-width: 420px;
+        }
+
+        /* رؤوس الأقسام */
+        .section-header {
+            text-align: center;
+            margin: 50px 0 28px;
+        }
+
+        .section-header h3 {
+            font-family: 'Amiri', serif;
+            font-size: 1.35rem;
+            color: var(--accent-gold);
+            display: inline-block;
+            padding: 10px 40px;
+            background: white;
+            border: 2px solid var(--mint-soft);
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(168,196,176,0.15);
+        }
+
+        /* بطاقات اللجنة – تصميم أنثوي فاخر */
+        .committee-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .member-card {
+            background: white;
+            border: 1px solid rgba(212,160,23,0.25);
+            border-radius: 20px;
+            padding: 26px 20px;
+            width: 235px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(30,58,95,0.08);
+        }
+
+        .member-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(212,160,23,0.22);
+            border-color: var(--accent-gold);
+        }
+
+        .member-card .photo-wrap {
+            width: 92px;
+            height: 92px;
+            border-width: 4px;
+            margin-bottom: 14px;
+        }
+
+        .member-name {
+            font-family: 'Amiri', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--deep-navy);
+            margin-bottom: 6px;
+        }
+
+        .member-role {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .member-uni {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        /* صناديق المعلومات */
+        .event-info-wrapper {
+            margin: 40px 0;
+        }
+
+        .event-info-row1, .event-info-row2 {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .event-info-item {
+            background: white;
+            border: 2px solid var(--mint-soft);
+            border-radius: 18px;
+            padding: 20px 26px;
+            min-width: 260px;
+            box-shadow: 0 12px 35px rgba(168,196,176,0.12);
+            transition: all 0.3s;
+        }
+
+        .event-info-item:hover {
+            border-color: var(--accent-gold);
+            transform: scale(1.03);
+        }
+
+        .event-info-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .event-info-val {
+            font-size: 1.05rem;
+            color: var(--deep-navy);
+            font-weight: 600;
+        }
+
+        .event-info-val-gold {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+        }
+
+        /* خريطة */
+        .map-box {
+            border-radius: 22px;
+            overflow: hidden;
+            border: 3px solid var(--accent-gold);
+            box-shadow: 0 15px 45px rgba(30,58,95,0.12);
+            margin: 30px 0;
+        }
+
+        /* العد التنازلي – تصميم أنيق */
+        .countdown-section {
+            background: linear-gradient(135deg, #FFFFFF, #F0E9E0);
+            border: 2px solid var(--accent-gold);
+            border-radius: 26px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 20px 55px rgba(212,160,23,0.15);
+        }
+
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .count-box {
+            background: white;
+            border: 2px solid var(--mint-soft);
+            border-radius: 16px;
+            padding: 14px 22px;
+            min-width: 78px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .count-num {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: block;
+        }
+
+        /* صندوق التهاني */
+        .congrats-box {
+            background: white;
+            border: 2px solid var(--soft-rose);
+            border-radius: 26px;
+            padding: 40px;
+            margin-top: 50px;
+            box-shadow: 0 20px 60px rgba(200,154,154,0.15);
+        }
+
+        .congrats-box h4 {
+            color: var(--deep-navy);
+            font-size: 1.45rem;
+            margin-bottom: 24px;
+        }
+
+        input[type="text"], textarea {
+            background: #FAF6F0;
+            border: 2px solid #E8D9C0;
+            border-radius: 14px;
+            padding: 14px 18px;
+            width: 100%;
+            font-family: 'Noto Sans Arabic', sans-serif;
+            transition: all 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 4px rgba(212,160,23,0.15);
+        }
+
+        .congrats-btn {
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 14px 40px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .congrats-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(212,160,23,0.4);
+        }
+
+        /* التذييل */
+        .footer-bar {
+            text-align: center;
+            padding: 30px 0 20px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            border-top: 1px solid #E8D9C0;
+            margin-top: 60px;
+        }
+
+        /* تأثيرات إضافية */
+        .glow-text {
+            animation: softGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes softGlow {
+            from { text-shadow: 0 0 12px rgba(212,160,23,0.4); }
+            to { text-shadow: 0 0 22px rgba(212,160,23,0.7); }
+        }
+
+        @media (max-width: 768px) {
+            .header-bar { flex-direction: column; gap: 20px; text-align: center; }
+            .committee-grid { gap: 18px; }
+            .thesis-card { padding: 32px 24px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- خلفية الورود الخفيفة -->
+    <div class="floral-bg" id="floral-bg"></div>
+
+    <div class="page-wrapper">
+        <!-- HEADER -->
+        <div class="header-bar">
+            <div class="uni-info">
+                <div class="uni-name">جامعة الأزهر</div>
+                <div class="uni-sub">كلية التربية بنين بالقاهرة<br>قسم أصول التربية</div>
+            </div>
+            <div class="logos">
+                <div class="logo-circle">
+                    <img src="images/uni_logo.png" alt="جامعة الأزهر">
+                </div>
+                <div class="logo-circle">
+                    <img src="images/college_logo.png" alt="كلية التربية">
+                </div>
+                <div class="logo-circle">
+                    <img src="images/dept_logo.png" alt="قسم أصول التربية">
+                </div>
+            </div>
+        </div>
+
+        <!-- INVITATION TITLE -->
+        <div class="invite-title-wrap">
+            <img src="images/invite_text.png" alt="دعوة" class="invite-img">
+        </div>
+
+        <!-- ANNOUNCEMENT -->
+        <div class="announcement">
+            <p>
+                يسر قسم أصول التربية بكلية التربية بنين بالقاهرة – جامعة الأزهر
+                أن يدعوكم لحضور مناقشة رسالة العالمية <strong style="color:var(--accent-gold);">دكتوراه الفلسفة</strong> في التربية، تخصص <strong style="color:var(--deep-navy);">(أصول التربية)</strong>، وعنوانها:
+            </p>
+        </div>
+
+        <!-- THESIS CARD -->
+        <div class="thesis-card">
+            <div class="thesis-title">
+                استراتيجية مقترحة لتوظيف
+                <br>
+                <span class="highlight">روبوتات المحادثة Chatbots</span>
+                <br>
+                في التعليم الجامعي بمصر من منظور
+                <br>
+                <span class="highlight">فلسفة الذكاء الاصطناعي المسؤول</span>
+            </div>
+        </div>
+
+        <!-- RESEARCHER -->
+        <div class="researcher-section">
+            <div class="researcher-card">
+                <div class="photo-wrap">
+                    <img src="images/researcher1.png" alt="محمد فرح">
+                </div>
+                <div class="researcher-name glow-text">محمد فرح محمد متولي</div>
+                <div class="researcher-title">
+                    المدرس المساعد بقسم أصول التربية<br>
+                    كلية التربية بنين بالقاهرة - جامعة الأزهر
+                </div>
+            </div>
+        </div>
+
+        <!-- SUPERVISION -->
+        <div class="section-header"><h3>◈ لجنة الإشراف ◈</h3></div>
+        <div class="committee-grid">
+            <div class="member-card">
+                <div class="photo-wrap">
+                    <img src="images/per1.png" alt="مشرف">
+                </div>
+                <div class="member-name">أ.د/ أحمد سمير فوزي عبد الله</div>
+                <div class="member-role">أستاذ أصول التربية</div>
+                <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+            </div>
+            <div class="member-card">
+                <div class="photo-wrap">
+                    <img src="images/per2.png" alt="مشرف">
+                </div>
+                <div class="member-name">د/ ياسر علي علي عبد الغني</div>
+                <div class="member-role">أستاذ تكنولوجيا التعليم المساعد</div>
+                <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+            </div>
+            <div class="member-card">
+                <div class="photo-wrap">
+                    <img src="images/per3.png" alt="مشرف">
+                </div>
+                <div class="member-name">د/ جمال عبد الحميد أحمد عبد السميع</div>
+                <div class="member-role">مدرس أصول التربية</div>
+                <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+            </div>
+        </div>
+
+        <!-- DISCUSSION COMMITTEE -->
+        <div class="section-header"><h3>◈ لجنة المناقشة والحكم ◈</h3></div>
+        <div class="committee-grid">
+            <div class="member-card">
+                <div class="photo-wrap">
+                    <img src="images/per1.png" alt="مناقش">
+                </div>
+                <div class="member-name">أ.د/ أحمد سمير فوزي عبد الله</div>
+                <div class="member-role">أستاذ أصول التربية</div>
+                <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+                <div class="member-role" style="margin-top:8px;color:#C89A9A;">(مشرفًا ورئيسًا)</div>
+            </div>
+            <div class="member-card">
+                <div class="photo-wrap">
+                    <img src="images/perso1.png" alt="مناقش">
+                </div>
+                <div class="member-name">أ.د/ محمود عبد اللطيف السيد</div>
+                <div class="member-role">أستاذ أصول التربية</div>
+                <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+                <div class="member-role" style="margin-top:8px;color:#C89A9A;">(مشرفًا ورئيسًا)</div>
+            </div>
+            <div class="member-card">
+                <div class="photo-wrap">
+                    <img src="images/perso2.png" alt="مناقش">
+                </div>
+                <div class="member-name">أ.د/ نسمة محمد عبد السلام</div>
+                <div class="member-role">أستاذ أصول التربية</div>
+                <div class="member-uni">كلية التربية<br>جامعة عين شمس</div>
+                <div class="member-role" style="margin-top:8px;color:#C89A9A;">(مشرفًا ورئيسًا)</div>
+            </div>
+            <div class="member-card">
+                <div class="photo-wrap">
+                    <img src="images/per2.png" alt="مناقش">
+                </div>
+                <div class="member-name">د/ ياسر علي علي عبد الغني</div>
+                <div class="member-role">أستاذ تكنولوجيا التعليم المساعد</div>
+                <div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div>
+                <div class="member-role" style="margin-top:8px;color:#C89A9A;">(مشرفًا ورئيسًا)</div>
+            </div>
+        </div>
+
+        <!-- EVENT INFO -->
+        <div class="section-header"><h3>◈ موعد المناقشة وموقعها ◈</h3></div>
+        <div class="event-info-wrapper">
+            <div class="event-info-row1">
+                <div class="event-info-item">
+                    <div class="event-info-icon">📅</div>
+                    <div>
+                        <span class="event-info-val">يوم الخميس</span>
+                        <span class="event-info-val-gold">17/10/2026</span>
+                    </div>
+                </div>
+                <div class="event-info-item">
+                    <div class="event-info-icon">🕛</div>
+                    <div>
+                        <span class="event-info-val">الساعة</span>
+                        <span class="event-info-val-gold">12:00 ظهرًا</span>
+                    </div>
+                </div>
+            </div>
+            <div class="event-info-row2">
+                <div class="event-info-item" style="max-width:520px;">
+                    <div class="event-info-icon">📍</div>
+                    <div>
+                        <span class="event-info-val-gold">كلية التربية بنين بالقاهرة - جامعة الأزهر</span>
+                        <span class="event-info-val">قاعة المناقشات (أ)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAP -->
+        <div class="map-box">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.158757263557!2d31.31253552474634!3d30.060983517787463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e535c536a25%3A0xe8046d566ecd3e58!2z2YPZhNmK2Kkg2KfZhNiq2LHYqNmK2Kkg2KjZhtmK2YYg2KzYp9mF2LnYqSDYp9mE2KPYstmH2LE!5e0!3m2!1sar!2seg!4v1777125767618!5m2!1sar!2seg" width="600" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <!-- COUNTDOWN -->
+        <div class="section-header"><h3>◈ العد التنازلي للمناقشة ◈</h3></div>
+        <div class="countdown-section">
+            <div id="countdown-done" class="countdown-done" style="display:none; font-size:1.6rem; color:var(--accent-gold); margin-bottom:16px;">
+                تمت المناقشة بحمد الله وتوفيقه 🎓
+            </div>
+            <div id="countdown-live">
+                <div class="countdown-grid">
+                    <div class="count-box"><span class="count-num" id="days">00</span><span style="font-size:0.75rem;color:#777;">أيام</span></div>
+                    <div class="count-box"><span class="count-num" id="hours">00</span><span style="font-size:0.75rem;color:#777;">ساعة</span></div>
+                    <div class="count-box"><span class="count-num" id="minutes">00</span><span style="font-size:0.75rem;color:#777;">دقيقة</span></div>
+                    <div class="count-box"><span class="count-num" id="seconds">00</span><span style="font-size:0.75rem;color:#777;">ثانية</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONGRATS BOX -->
+        <div class="congrats-box">
+            <h4>◈ اكتب تهنئة للباحث ◈</h4>
+            <div style="margin-bottom:12px;">
+                <input id="congrats-name" type="text" placeholder="اسمك.. (اختياري)">
+            </div>
+            <textarea id="congrats-text" placeholder="اكتب تهنئتك هنا..." rows="4"></textarea>
+            <div style="text-align:center; margin-top:18px;">
+                <button class="congrats-btn" onclick="submitCongrats()">إرسال التهنئة</button>
+            </div>
+            <div id="congrats-count" style="text-align:center;margin:16px 0;font-size:0.9rem;color:#777;"></div>
+            <div id="congrats-list"></div>
+        </div>
+
+        <!-- SHARE -->
+        <div style="text-align:center; margin:50px 0 30px;">
+            <div style="font-size:0.9rem; color:#888; margin-bottom:12px; letter-spacing:2px;">◈ شارك الدعوة ◈</div>
+            <div style="display:flex; justify-content:center; gap:18px; flex-wrap:wrap;">
+                <!-- يمكنك إضافة أزرار المشاركة كما كانت -->
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer-bar">
+            جميع حقوق الفكرة والبرمجة محفوظة © <span style="color:var(--accent-gold);">محمد فرح 2026</span>
+        </div>
+    </div>
+
+    <!-- JavaScript للخلفية والعد التنازلي (نفس السابق مع تعديل بسيط) -->
+    <script>
+        // خلفية نثر الورود
+        const floralBg = document.getElementById('floral-bg');
+        const roses = ['🌸','🌷','🌹','💐','✨'];
+        for(let i = 0; i < 35; i++) {
+            const p = document.createElement('div');
+            p.className = 'rose-particle';
+            p.textContent = roses[Math.floor(Math.random()*roses.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 18 + 22) + 's';
+            p.style.animationDelay = '-' + (Math.random() * 30) + 's';
+            p.style.opacity = Math.random() * 0.12 + 0.06;
+            floralBg.appendChild(p);
+        }
+
+        // العد التنازلي (نفس الكود السابق)
+        const targetDate = new Date('2026-10-17T12:00:00').getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff <= 0) {
+                document.getElementById('countdown-live').style.display = 'none';
+                document.getElementById('countdown-done').style.display = 'block';
+                return;
+            }
+            document.getElementById('days').innerText = Math.floor(diff / (1000*60*60*24)).toString().padStart(2,'0');
+            document.getElementById('hours').innerText = Math.floor((diff % (1000*60*60*24)) / (1000*60*60)).toString().padStart(2,'0');
+            document.getElementById('minutes').innerText = Math.floor((diff % (1000*60*60)) / (1000*60)).toString().padStart(2,'0');
+            document.getElementById('seconds').innerText = Math.floor((diff % (1000*60)) / 1000).toString().padStart(2,'0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // باقي كود Firebase والتهاني والمشاركة كما هو (غير معدل)
+        // ... (انسخ كود Firebase والدوال من النسخة الأصلية هنا)
+    </script>
+</body>
+</html>
