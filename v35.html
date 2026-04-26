@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>دعوة مناقشة رسالة دكتوراه – محمد فرح متولي | فلسفة الذكاء الاصطناعي المسؤول</title>
+<!-- Fonts & Icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyA5xYXrZrrwA6ws8WRyMr2dIHXlWBVn3FE",
+    authDomain: "aaaaaa-5b453.firebaseapp.com",
+    databaseURL: "https://aaaaaa-5b453-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "aaaaaa-5b453",
+    storageBucket: "aaaaaa-5b453.firebasestorage.app",
+    messagingSenderId: "722031681124",
+    appId: "1:722031681124:web:0d45ca14b0413d9954c971"
+  };
+  const ADMIN_PASSWORD = "333555";
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const congratsRef = ref(db, "congrats");
+  let myToken = localStorage.getItem("congrats_token");
+  if (!myToken) { myToken = "tk_" + Math.random().toString(36).slice(2) + Date.now(); localStorage.setItem("congrats_token", myToken); }
+  let isAdmin = sessionStorage.getItem("admin_logged") === "yes";
+  window.submitCongrats = function () {
+    const nameEl = document.getElementById("congrats-name");
+    const textEl = document.getElementById("congrats-text");
+    const name = nameEl.value.trim() || "زائر";
+    const text = textEl.value.trim();
+    if (!text) { alert("من فضلك اكتب التهنئة"); return; }
+    push(congratsRef, { name, text, time: new Date().toLocaleString("ar-EG"), ts: Date.now(), token: myToken });
+    nameEl.value = ""; textEl.value = "";
+  };
+  window.deleteCongrats = function (id, token) { if (token !== myToken && !isAdmin) return; if (confirm("هل تريد حذف هذه التهنئة؟")) remove(ref(db, "congrats/" + id)); };
+  window.editCongrats = function (id, oldText, token) {
+    if (token !== myToken) return;
+    const overlay = document.createElement("div");
+    overlay.style.cssText = "position:fixed;inset:0;background:rgba(10,25,47,.95);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;";
+    const box = document.createElement("div");
+    box.style.cssText = "background:#0a192f;border:1px solid #a28615;border-radius:20px;padding:24px;width:100%;max-width:520px;font-family:Cairo,sans-serif;direction:rtl;box-shadow:0 20px 40px rgba(0,0,0,0.5);";
+    const title = document.createElement("p");
+    title.style.cssText = "color:#c4efe6;font-size:.9rem;margin-bottom:12px;font-weight:700;";
+    title.textContent = "✏️ تعديل التهنئة";
+    const ta = document.createElement("textarea");
+    ta.value = oldText;
+    ta.style.cssText = "width:100%;min-height:160px;background:rgba(255,255,255,.05);border:1px solid #a28615;border-radius:12px;padding:12px 16px;color:#e8f8f7;font-family:Cairo,sans-serif;font-size:1rem;outline:none;resize:vertical;line-height:1.7;";
+    const btns = document.createElement("div");
+    btns.style.cssText = "display:flex;gap:10px;margin-top:14px;justify-content:flex-start;";
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "حفظ";
+    saveBtn.style.cssText = "background:#a28615;color:#030f10;border:none;border-radius:8px;padding:8px 24px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif;";
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "إلغاء";
+    cancelBtn.style.cssText = "background:rgba(255,255,255,.06);color:#8ecfcd;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px 18px;cursor:pointer;font-family:Cairo,sans-serif;";
+    saveBtn.onclick = function () {
+      const newText = ta.value.trim();
+      if (newText) update(ref(db, "congrats/" + id), { text: newText, edited: true });
+      document.body.removeChild(overlay);
+    };
+    cancelBtn.onclick = function () { document.body.removeChild(overlay); };
+    btns.appendChild(saveBtn); btns.appendChild(cancelBtn);
+    box.appendChild(title); box.appendChild(ta); box.appendChild(btns);
+    overlay.appendChild(box); document.body.appendChild(overlay);
+    setTimeout(function(){ ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }, 80);
+  };
+  function renderList(snap) {
+    const container = document.getElementById("congrats-list");
+    const countEl = document.getElementById("congrats-count");
+    if (!container) return;
+    while (container.firstChild) container.removeChild(container.firstChild);
+    if (!snap || !snap.exists()) {
+      const p = document.createElement("p");
+      p.style.cssText = "text-align:center;color:#8ecfcd;padding:20px;";
+      p.textContent = "✨ كن أول من يهنئ الباحث ✨";
+      container.appendChild(p); if(countEl) countEl.textContent = ""; return;
+    }
+    const items = [];
+    snap.forEach(function(child){ const v = child.val(); v._id = child.key; items.push(v); });
+    items.reverse();
+    if(countEl) countEl.textContent = "◈ عدد التهاني: " + items.length + " ◈";
+    for (let i = 0; i < items.length; i++) {
+      const c = items[i];
+      const isOwner = (c.token === myToken);
+      const wrap = document.createElement("div");
+      wrap.className = "c-item";
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "c-name";
+      nameSpan.textContent = "👤 " + (c.name || "زائر");
+      wrap.appendChild(nameSpan);
+      const textDiv = document.createElement("div");
+      textDiv.className = "c-text";
+      textDiv.textContent = c.text || "";
+      wrap.appendChild(textDiv);
+      const metaDiv = document.createElement("div");
+      metaDiv.className = "c-meta";
+      const timeSpan = document.createElement("span");
+      timeSpan.className = "c-time";
+      timeSpan.textContent = c.time || "";
+      metaDiv.appendChild(timeSpan);
+      if (c.edited) {
+        const edSpan = document.createElement("span");
+        edSpan.className = "c-edited";
+        edSpan.textContent = "· (معدّل)";
+        metaDiv.appendChild(edSpan);
+      }
+      wrap.appendChild(metaDiv);
+      if (isOwner || isAdmin) {
+        const btns = document.createElement("div");
+        btns.className = "c-btns";
+        if (isOwner) {
+          const editBtn = document.createElement("button");
+          editBtn.className = "c-btn-edit";
+          editBtn.textContent = "✏️ تعديل";
+          const cId = c._id, cText = c.text, cToken = c.token;
+          editBtn.onclick = function() { window.editCongrats(cId, cText, cToken); };
+          btns.appendChild(editBtn);
+        }
+        const delBtn = document.createElement("button");
+        delBtn.className = "c-btn-del";
+        delBtn.textContent = "🗑️ حذف";
+        const cId2 = c._id, cToken2 = c.token;
+        delBtn.onclick = function() { window.deleteCongrats(cId2, cToken2); };
+        btns.appendChild(delBtn);
+        wrap.appendChild(btns);
+      }
+      container.appendChild(wrap);
+    }
+  }
+  onValue(congratsRef, function(snap) { renderList(snap); });
+  function updateAdminUI() {
+    const statusDiv = document.getElementById("admin-status");
+    if(statusDiv) statusDiv.innerHTML = '<span style="color:#2ecc71">✅ أنت مسجل كمدير — يمكنك حذف أي تعليق</span> <button onclick="adminLogout()" style="background:rgba(180,30,30,.3);border:1px solid #c0392b;color:#ff6b6b;border-radius:6px;padding:4px 14px;font-size:.75rem;cursor:pointer;font-family:Cairo,sans-serif;margin-right:8px;">تسجيل خروج</button>';
+    const toggleBtn = document.getElementById("admin-toggle-btn");
+    if(toggleBtn) toggleBtn.style.display = "none";
+  }
+  window.adminLogin = function () {
+    const pass = document.getElementById("admin-pass-input").value;
+    if (pass === ADMIN_PASSWORD) {
+      isAdmin = true; sessionStorage.setItem("admin_logged","yes");
+      const loginBox = document.getElementById("admin-login-box");
+      if(loginBox) loginBox.style.display = "none";
+      const errorBox = document.getElementById("admin-pass-error");
+      if(errorBox) errorBox.style.display = "none";
+      updateAdminUI();
+      onValue(congratsRef, function(snap) { renderList(snap); });
+    } else { const err = document.getElementById("admin-pass-error"); if(err) err.style.display = "block"; }
+  };
+  window.adminLogout = function () {
+    isAdmin = false; sessionStorage.removeItem("admin_logged");
+    const statusDiv = document.getElementById("admin-status");
+    if(statusDiv) statusDiv.innerHTML = "";
+    const toggleBtn = document.getElementById("admin-toggle-btn");
+    if(toggleBtn) toggleBtn.style.display = "inline-block";
+    onValue(congratsRef, function(snap) { renderList(snap); });
+  };
+  window.showAdminLogin = function () {
+    const loginBox = document.getElementById("admin-login-box");
+    const toggleBtn = document.getElementById("admin-toggle-btn");
+    if(loginBox) loginBox.style.display = "block";
+    if(toggleBtn) toggleBtn.style.display = "none";
+    setTimeout(function(){ const inp = document.getElementById("admin-pass-input"); if(inp) inp.focus(); }, 100);
+  };
+  window.cancelAdminLogin = function () {
+    const loginBox = document.getElementById("admin-login-box");
+    const toggleBtn = document.getElementById("admin-toggle-btn");
+    if(loginBox) loginBox.style.display = "none";
+    if(toggleBtn) toggleBtn.style.display = "inline-block";
+    const passInp = document.getElementById("admin-pass-input");
+    if(passInp) passInp.value = "";
+    const errDiv = document.getElementById("admin-pass-error");
+    if(errDiv) errDiv.style.display = "none";
+  };
+  if (isAdmin) { setTimeout(updateAdminUI, 300); }
+  window.shareOn = function(platform){
+    const url = window.location.href;
+    const text = "📢 دعوة لحضور مناقشة رسالة الدكتوراه: استراتيجية مقترحة لتوظيف روبوتات المحادثة في التعليم الجامعي – الباحث محمد فرح متولي";
+    let s='';
+    if(platform==='facebook') s='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+    if(platform==='x') s='https://twitter.com/intent/tweet?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text);
+    if(platform==='whatsapp') s='https://api.whatsapp.com/send?text='+encodeURIComponent(text+' '+url);
+    if(platform==='telegram') s='https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text);
+    window.open(s,'_blank');
+  };
+</script>
+<style>
+  :root {
+    --primary-color: #097f82;
+    --secondary-color: #a28615;
+    --accent-color: #c4efe6;
+    --dark-bg: #0a192f;
+    --text-light: #ffffff;
+    --gold-light: #d4af3a;
+    --teal-light: #0ba8ac;
+    --orange: #e8813a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(rgba(10, 25, 47, 0.88), rgba(10, 25, 47, 0.88)), url('assets/ai_background.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    overflow-x: hidden;
+    position: relative;
+  }
+  /* Falling Flowers Animation */
+  .flower-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    overflow: hidden;
+  }
+  .flower {
+    position: absolute;
+    color: rgba(255, 180, 200, 0.8);
+    font-size: 1.5rem;
+    user-select: none;
+    pointer-events: none;
+    animation: fall linear forwards;
+    z-index: 10;
+    text-shadow: 0 0 5px rgba(255,255,200,0.5);
+  }
+  @keyframes fall {
+    0% {
+      transform: translateY(-20vh) rotate(0deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 20px;
+    position: relative;
+    z-index: 20;
+  }
+  /* header same as second design but enhanced */
+  .custom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px 24px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .header-right {
+    text-align: right;
+  }
+  .header-right h2 {
+    margin: 4px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--accent-color);
+  }
+  .header-left .logos {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+  .logos img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 12px rgba(255,255,200,0.4));
+    transition: transform 0.3s;
+  }
+  .logos img:hover { transform: scale(1.05);}
+  .invite-img {
+    width: 180px;
+    margin: 10px auto;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+  .content-card {
+    background: rgba(10, 25, 47, 0.65);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 32px;
+    padding: 32px 36px;
+    margin-bottom: 30px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.4);
+    transition: all 0.2s;
+  }
+  .bismillah {
+    font-family: 'Amiri', serif;
+    font-size: 1.7rem;
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+    text-align: center;
+  }
+  .thesis-title-box {
+    background: linear-gradient(135deg, rgba(9,127,130,0.3), rgba(10,25,47,0.8));
+    padding: 32px 20px;
+    border-radius: 28px;
+    margin: 28px 0;
+    border-right: 6px solid var(--secondary-color);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .thesis-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.7;
+    color: var(--accent-color);
+    margin: 0;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .person-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 24px 0 20px;
+  }
+  .person-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid var(--secondary-color);
+    object-fit: cover;
+    box-shadow: 0 0 30px rgba(162,134,21,0.5);
+    transition: 0.3s;
+  }
+  .section-title {
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    display: inline-block;
+    padding-bottom: 6px;
+    margin: 50px 0 25px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .committee-member {
+    background: rgba(255,255,240,0.04);
+    padding: 20px 12px;
+    border-radius: 24px;
+    text-align: center;
+    transition: transform 0.2s, background 0.2s;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .committee-member:hover {
+    transform: translateY(-6px);
+    background: rgba(9,127,130,0.2);
+    border-color: var(--primary-color);
+  }
+  .committee-member img {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    object-fit: cover;
+    margin-bottom: 12px;
+  }
+  .committee-member h4 {
+    margin: 10px 0 5px;
+    font-size: 1rem;
+    color: var(--accent-color);
+  }
+  .committee-member p {
+    font-size: 0.82rem;
+    opacity: 0.85;
+  }
+  .info-box {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 40px 0 20px;
+    background: rgba(9,127,130,0.2);
+    padding: 20px;
+    border-radius: 28px;
+  }
+  .info-item {
+    text-align: center;
+    min-width: 140px;
+  }
+  .info-item i {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+  }
+  /* countdown second design style */
+  #countdown {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+  }
+  .countdown-item {
+    background: var(--primary-color);
+    padding: 14px 18px;
+    border-radius: 20px;
+    min-width: 85px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  .countdown-item span {
+    display: block;
+    font-size: 1.9rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+  }
+  .map-container {
+    margin: 35px 0;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+  }
+  .congrats-text {
+    color: var(--gold-light);
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 25px 0 15px;
+    text-align: center;
+  }
+  /* comments custom firebase */
+  .custom-comments {
+    background: rgba(255,255,255,0.05);
+    border-radius: 28px;
+    padding: 20px 24px;
+    margin-top: 30px;
+  }
+  .input-row { display:flex; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+  .input-row input, textarea {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--secondary-color);
+    border-radius: 14px;
+    padding: 12px 16px;
+    color: white;
+    font-family: 'Cairo', sans-serif;
+    width: 100%;
+  }
+  textarea { min-height: 85px; resize: vertical; }
+  .congrats-btn {
+    background: var(--secondary-color);
+    color: #0a192f;
+    border: none;
+    border-radius: 40px;
+    padding: 8px 32px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .c-item {
+    background: rgba(0,0,0,0.35);
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 14px;
+    border-right: 4px solid var(--gold-light);
+  }
+  .c-name { font-weight: 700; color: var(--teal-light); display: block; text-align: right; margin-bottom: 6px; }
+  .c-text { font-size: 0.95rem; line-height: 1.6; text-align: right; word-break: break-word; }
+  .c-meta { display: flex; gap: 10px; justify-content: flex-start; direction: ltr; margin: 6px 0; }
+  .c-time { font-size: 0.7rem; color: #bbb; }
+  .c-edited { font-size: 0.7rem; color: var(--gold-light); }
+  .c-btns { display: flex; gap: 8px; justify-content: center; margin-top: 8px; }
+  .c-btn-edit, .c-btn-del { background: rgba(0,0,0,0.5); border: 1px solid; border-radius: 30px; padding: 4px 14px; font-size: 0.7rem; cursor: pointer; font-family: 'Cairo'; }
+  .c-btn-edit { border-color: var(--teal-light); color: #c4efe6; }
+  .c-btn-del { border-color: #c0392b; color: #ff9e8f; }
+  .share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 35px 0 20px;
+  }
+  .share-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1.6rem;
+    transition: 0.2s;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+  }
+  .share-btn.facebook { background: #3b5998; }
+  .share-btn.twitter { background: #1da1f2; }
+  .share-btn.whatsapp { background: #25d366; }
+  .share-btn.telegram { background: #0088cc; }
+  .share-btn:hover { transform: translateY(-5px); filter: brightness(1.1); }
+  footer {
+    text-align: center;
+    padding: 30px 0 20px;
+    font-size: 0.85rem;
+    opacity: 0.75;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 20px;
+  }
+  .admin-wrap { text-align: center; margin: 15px 0; }
+  @media(max-width: 760px){
+    .container { padding: 20px 16px; }
+    .content-card { padding: 24px 18px; }
+    .thesis-title { font-size: 1.3rem; }
+    .custom-header { flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+    .header-right { text-align: center; }
+    .logos img { width: 65px; height: 65px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Falling Flowers Decoration -->
+<div class="flower-bg" id="flowerBg"></div>
+
+<div class="container">
+  <!-- HEADER (design from second code) -->
+  <div class="custom-header">
+    <div class="header-right">
+      <h2>جامعة الأزهر</h2>
+      <h2>كلية التربية بنين بالقاهرة</h2>
+      <h2>قسم أصول التربية</h2>
+    </div>
+    <div class="header-left">
+      <div class="logos">
+        <!-- images: please add 'assets/alazhar_logo.png' and 'assets/edu_faculty_logo.png' in your images folder -->
+        <img src="assets/alazhar_logo.png" alt="جامعة الأزهر">
+        <img src="assets/edu_faculty_logo.png" alt="كلية التربية">
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="bismillah">ﷺ بسم الله الرحمن الرحيم</div>
+    <p style="font-size:1.05rem; text-align:center;">يُسر قسم أصول التربية أن يدعوكم لحضور مناقشة رسالة العالمية <strong style="color:var(--secondary-color);">(دكتوراه الفلسفة)</strong> في التربية، تخصص أصول التربية، وعنوانها:</p>
+
+    <div class="thesis-title-box">
+      <h1 class="thesis-title">استراتيجية مقترحة لتوظيف روبوتات المحادثة Chatbots في التعليم الجامعي بمصر من منظور فلسفة الذكاء الاصطناعي المسؤول</h1>
+    </div>
+
+    <p style="text-align:center; margin-top:10px;">المقدمة من الباحث</p>
+    <div class="person-card">
+      <!-- IMPORTANT: researcher image name: 'assets/researcher.png' -->
+      <img src="assets/researcher.png" class="person-img" alt="محمد فرح متولي">
+      <h2 style="color: var(--accent-color); margin-top:12px;">محمد فرح محمد متولي</h2>
+      <p>المدرس المساعد بقسم أصول التربية - كلية التربية بنين بالقاهرة</p>
+    </div>
+
+    <h3 class="section-title">لجنة الإشراف</h3>
+    <div class="committee-grid">
+      <div class="committee-member"><img src="assets/prof_ahmed.png" alt="أ.د أحمد سمير"><h4>أ.د/ أحمد سمير فوزي عبد الله</h4><p>أستاذ أصول التربية - كلية التربية بنين</p></div>
+      <div class="committee-member"><img src="assets/dr_yasser.png" alt="د. ياسر"><h4>د/ ياسر علي علي عبد الغني</h4><p>أستاذ تكنولوجيا التعليم المساعد</p></div>
+      <div class="committee-member"><img src="assets/dr_gamal.png" alt="د. جمال"><h4>د/ جمال عبد الحميد أحمد عبد السميع</h4><p>مدرس أصول التربية</p></div>
+    </div>
+
+    <h3 class="section-title">لجنة المناقشة والحكم</h3>
+    <div class="committee-grid">
+      <div class="committee-member"><img src="assets/prof_ahmed.png" alt="أ.د أحمد"><h4>أ.د/ أحمد سمير فوزي عبد الله</h4><p>أستاذ أصول التربية - جامعة الأزهر</p><small style="color:var(--gold-light);">(مشرفًا ورئيسًا)</small></div>
+      <div class="committee-member"><img src="assets/prof_mahmoud.png" alt="أ.د محمود"><h4>أ.د/ محمود عبد اللطيف السيد</h4><p>أستاذ أصول التربية - جامعة الأزهر</p><small style="color:var(--gold-light);">(عضوًا)</small></div>
+      <div class="committee-member"><img src="assets/prof_nesma.png" alt="أ.د نسمة"><h4>أ.د/ نسمة محمد عبد السلام</h4><p>أستاذ تكنولوجيا التعليم - جامعة عين شمس</p><small style="color:var(--gold-light);">(عضوًا)</small></div>
+      <div class="committee-member"><img src="assets/dr_yasser.png" alt="د. ياسر"><h4>د/ ياسر علي علي عبد الغني</h4><p>أستاذ تكنولوجيا التعليم المساعد</p><small style="color:var(--gold-light);">(عضوًا)</small></div>
+    </div>
+
+    <h3 class="section-title">موعد المناقشة</h3>
+    <div id="countdown">
+      <div class="countdown-item"><span id="days">00</span><label>يوم</label></div>
+      <div class="countdown-item"><span id="hours">00</span><label>ساعة</label></div>
+      <div class="countdown-item"><span id="minutes">00</span><label>دقيقة</label></div>
+      <div class="countdown-item"><span id="seconds">00</span><label>ثانية</label></div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-item"><i class="fas fa-calendar-alt"></i><p>الخميس 17 أكتوبر 2026</p></div>
+      <div class="info-item"><i class="fas fa-clock"></i><p>12:00 ظهراً</p></div>
+      <div class="info-item"><i class="fas fa-map-marker-alt"></i><p>قاعة المناقشات (أ) - كلية التربية بنين</p></div>
+    </div>
+
+    <h3 class="section-title">موقع المناقشة</h3>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.158757263557!2d31.31253552474634!3d30.060983517787463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e535c536a25%3A0xe8046d566ecd3e58!2z2YPZhNmK2Kkg2KfZhNiq2LHYqNmK2Kkg2KjZhtmK2YYg2KzYp9mF2LnYqSDYp9mE2KPYstmH2LE!5e0!3m2!1sar!2seg!4v1777125767618!5m2!1sar!2seg" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <div class="congrats-text">🎓 ألف مبروك مقدماً للباحث محمد فرح ونفع الله بك وبعلمك 🎓</div>
+
+    <!-- Custom Comments + Firebase Section (same as first code's interactive) -->
+    <div class="custom-comments">
+      <h4 style="text-align:center; color:var(--gold-light); margin-bottom:20px;">✍️ اكتب تهنئة للباحث ✍️</h4>
+      <div class="input-row">
+        <input id="congrats-name" type="text" placeholder="اسمك الكريم (اختياري)">
+      </div>
+      <textarea id="congrats-text" placeholder="اكتب تهنئتك أو دعواتك الجميلة..."></textarea>
+      <div style="display:flex; justify-content:flex-end; margin-top:12px;">
+        <button class="congrats-btn" onclick="submitCongrats()">إرسال التهنئة</button>
+      </div>
+      <div id="congrats-count" style="font-size:0.8rem; color:var(--accent-color); margin:15px 0 5px; text-align:center;"></div>
+      <div id="congrats-list"></div>
+    </div>
+
+    <h3 class="section-title">شارك الدعوة</h3>
+    <div class="share-buttons">
+      <a href="#" class="share-btn facebook" onclick="shareOn('facebook');return false;"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="share-btn twitter" onclick="shareOn('x');return false;"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" class="share-btn whatsapp" onclick="shareOn('whatsapp');return false;"><i class="fab fa-whatsapp"></i></a>
+      <a href="#" class="share-btn telegram" onclick="shareOn('telegram');return false;"><i class="fab fa-telegram-plane"></i></a>
+    </div>
+  </div>
+
+  <div class="admin-wrap">
+    <div id="admin-status" style="margin-bottom:8px; font-size:0.8rem;"></div>
+    <button id="admin-toggle-btn" onclick="showAdminLogin()" style="background:rgba(10,25,47,0.7); border:1px solid var(--secondary-color); color:var(--secondary-color); border-radius:40px; padding:5px 18px; font-size:0.75rem; cursor:pointer;">⚙️ إدارة المدير</button>
+    <div id="admin-login-box" style="display:none; margin-top:18px; background:rgba(10,25,47,0.95); border:1px solid var(--primary-color); border-radius:24px; padding:20px; max-width:340px; margin-left:auto; margin-right:auto;">
+      <p style="font-size:0.9rem; color:var(--teal-light);">🔐 دخول المدير</p>
+      <input id="admin-pass-input" type="password" placeholder="كلمة السر" onkeydown="if(event.key==='Enter') adminLogin()" style="width:100%; background:rgba(0,0,0,0.5); border:1px solid var(--secondary-color); border-radius:12px; padding:10px; margin-bottom:12px; color:white;">
+      <p id="admin-pass-error" style="display:none; color:#ff8a7a; font-size:0.75rem;">❌ كلمة السر غير صحيحة</p>
+      <div style="display:flex; gap:10px;">
+        <button onclick="adminLogin()" style="background:var(--primary-color); border:none; border-radius:40px; padding:8px 0; flex:1; color:white; font-weight:700;">دخول</button>
+        <button onclick="cancelAdminLogin()" style="background:rgba(255,255,255,0.1); border:1px solid #aaa; border-radius:40px; padding:8px 0; flex:1;">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    جميع حقوق الفكرة والبرمجة محفوظة © <span style="color:var(--gold-light);">محمد فرح متولي 2026</span>
+  </footer>
+</div>
+
+<script>
+  // Countdown timer for 17 Oct 2026 12:00
+  const targetDate = new Date('2026-10-17T12:00:00').getTime();
+  function updateCount() {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+    if(diff <= 0) {
+      document.getElementById('countdown').innerHTML = '<div style="background:var(--secondary-color); padding:12px 24px; border-radius:40px;">🎉 تمت المناقشة بحمد الله وتوفيقه 🎉</div>';
+      return;
+    }
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+    const seconds = Math.floor((diff%(1000*60))/1000);
+    document.getElementById('days').innerHTML = days.toString().padStart(2,'0');
+    document.getElementById('hours').innerHTML = hours.toString().padStart(2,'0');
+    document.getElementById('minutes').innerHTML = minutes.toString().padStart(2,'0');
+    document.getElementById('seconds').innerHTML = seconds.toString().padStart(2,'0');
+  }
+  setInterval(updateCount, 1000);
+  updateCount();
+
+  // Falling flowers animation (beautiful petals)
+  const flowers = ['🌸', '🌼', '🌸', '🌻', '🌺', '🌸', '💮', '🌷', '🌸', '🌼'];
+  function createFlower() {
+    const flowerDiv = document.createElement('div');
+    flowerDiv.className = 'flower';
+    const randomFlower = flowers[Math.floor(Math.random() * flowers.length)];
+    flowerDiv.innerHTML = randomFlower;
+    const size = Math.random() * 22 + 18; // between 18px and 40px
+    flowerDiv.style.fontSize = size + 'px';
+    flowerDiv.style.left = Math.random() * 100 + '%';
+    flowerDiv.style.animationDuration = Math.random() * 6 + 5 + 's';
+    flowerDiv.style.animationDelay = Math.random() * 5 + 's';
+    flowerDiv.style.opacity = Math.random() * 0.7 + 0.3;
+    document.getElementById('flowerBg').appendChild(flowerDiv);
+    setTimeout(() => { if(flowerDiv && flowerDiv.remove) flowerDiv.remove(); }, 11000);
+  }
+  setInterval(() => { createFlower(); }, 800);
+  for(let i=0;i<12;i++) setTimeout(createFlower, i*300);
+</script>
+</body>
+</html>
