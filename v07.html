@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دعوة مناقشة رسالة دكتوراه – محمد فرح متولي | الطابع الفرعوني المعاصر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* لوحة ألوان جديدة: الأخضر الفيروزي التركوازي، الأزرق الليلي العريق، الذهب الأسود، الرملية الصحراوية */
+  --pharaoh-teal: #008B8B;        /* فيروزي مصري قديم */
+  --pharaoh-gold: #D4AF37;        /* ذهب أسطوري */
+  --pharaoh-dark: #0A1922;        /* أزرق ليلي عميق كسماء الصحراء */
+  --pharaoh-sand: #F5E6D3;        /* لون ورق البردي الطبيعي */
+  --pharaoh-ebony: #1C2D3A;       /* أسود مخملي دافئ */
+  --pharaoh-copper: #B85C1A;      /* نحاسي فرعوني */
+  --pharaoh-stone: #8C7A6B;       /* حجر رملي */
+  --border-glow: rgba(0,139,139,0.3);
+  --gold-glow: rgba(212,175,55,0.2);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--pharaoh-dark);
+  color: #EBDCB8;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+/* خلفية هيروغليفية عصرية */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" opacity="0.04"><path fill="none" stroke="%23D4AF37" stroke-width="0.8" d="M20,20 L30,10 L40,20 L35,30 L25,30 Z M80,15 L90,5 L100,15 L95,25 L85,25 Z M140,30 L150,20 L160,30 L155,40 L145,40 Z M50,60 L55,50 L65,50 L70,60 L60,70 Z M120,55 L130,45 L140,55 L135,65 L125,65 Z M170,70 L175,60 L185,60 L190,70 L180,80 Z"/><circle cx="40" cy="80" r="4" stroke="%23D4AF37" fill="none"/><rect x="150" y="75" width="12" height="18" stroke="%23D4AF37" fill="none"/></svg>');
+  background-repeat: repeat;
+  background-size: 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+.neural-bg {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 40%, rgba(0,139,139,0.03) 0%, rgba(10,25,34,0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+/* حواف الفرعونية */
+.page-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 20px 0;
+}
+
+/* هدر بنقوش فرعونية ثلاثية الأبعاد */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  background: rgba(10,25,34,0.65);
+  backdrop-filter: blur(12px);
+  border-bottom: 3px solid var(--pharaoh-gold);
+  border-radius: 0px 0px 36px 36px;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 32px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(212,175,55,0.2);
+}
+.uni-info .uni-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: var(--pharaoh-gold);
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(212,175,55,0.3);
+}
+.uni-info .uni-sub {
+  font-size: 0.85rem;
+  color: var(--pharaoh-stone);
+  font-weight: 500;
+}
+.logos {
+  display: flex;
+  gap: 18px;
+}
+.logo-circle {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px solid var(--pharaoh-gold);
+  overflow: hidden;
+  position: relative;
+  background: rgba(0,0,0,0.4);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.2), 0 6px 14px black;
+}
+.logo-circle img { width:100%; height:100%; object-fit:cover; }
+.logo-circle .shine {
+  position: absolute; inset:0;
+  background: conic-gradient(transparent 0deg, rgba(212,175,55,0.3) 70deg, transparent 140deg);
+  animation: shineRotate 9s linear infinite;
+  border-radius: 50%;
+}
+@keyframes shineRotate { 100%{ transform: rotate(360deg); } }
+.gold-ring { border-color: var(--pharaoh-copper); }
+
+.invite-title-wrap {
+  text-align: center;
+  margin: 20px 0 12px;
+}
+.invite-img {
+  max-width: 220px;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5)) brightness(1.05);
+}
+
+/* إعلان النقش */
+.announcement {
+  background: linear-gradient(125deg, rgba(0,139,139,0.12), rgba(10,25,34,0.8));
+  border-right: 8px solid var(--pharaoh-gold);
+  padding: 28px 32px;
+  border-radius: 46px 16px 46px 16px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+.announcement p {
+  font-size: 1.05rem;
+  line-height: 2;
+  font-weight: 500;
+  color: #F0E4C2;
+}
+.announcement p strong { color: var(--pharaoh-gold); font-weight: 800; }
+
+/* بطاقة الأطروحة – تميمة ذهبية */
+.thesis-card {
+  background: linear-gradient(145deg, #0F2A32, #07161f);
+  padding: 38px 28px;
+  border-radius: 64px 24px 64px 24px;
+  text-align: center;
+  margin: 24px 0;
+  border: 1px solid rgba(212,175,55,0.4);
+  box-shadow: 0 20px 40px -12px black, inset 0 0 40px rgba(212,175,55,0.1);
+}
+.thesis-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: #F7EED7;
+  line-height: 1.5;
+}
+.thesis-title .highlight {
+  color: var(--pharaoh-gold);
+  background: linear-gradient(120deg, transparent, rgba(212,175,55,0.15), transparent);
+  padding: 0 12px;
+  display: inline-block;
+}
+
+/* الباحث – صورة بصورة أوزوريسية */
+.researcher-section {
+  text-align: center;
+  margin: 32px 0 28px;
+}
+.photo-wrap {
+  display: inline-block;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--pharaoh-gold), var(--pharaoh-copper));
+  padding: 4px;
+  animation: sunPulse 3.5s infinite ease-out;
+}
+@keyframes sunPulse {
+  0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4);}
+  70% { box-shadow: 0 0 0 12px rgba(212,175,55,0);}
+  100% { box-shadow: 0 0 0 0 rgba(212,175,55,0);}
+}
+.photo-wrap img {
+  border-radius: 50%;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  background: #0A141A;
+}
+.photo-wrap.researcher-size { width: 128px; height: 128px; }
+.photo-wrap.member-size { width: 102px; height: 102px; }
+
+.researcher-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: var(--pharaoh-gold);
+  margin: 12px 0 6px;
+}
+.researcher-title { font-size: 0.9rem; color: #BBA97A; }
+
+/* رؤوس الأقسام – بنقوش */
+.section-header {
+  margin: 42px 0 24px;
+  text-align: center;
+  position: relative;
+}
+.section-header h3 {
+  background: var(--pharaoh-dark);
+  display: inline-block;
+  padding: 6px 36px;
+  font-weight: 800;
+  color: var(--pharaoh-gold);
+  letter-spacing: 2px;
+  border-top: 2px solid var(--pharaoh-gold);
+  border-bottom: 2px solid var(--pharaoh-gold);
+  border-radius: 60px;
+  font-size: 1.05rem;
+}
+
+.committee-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 26px;
+  margin-bottom: 28px;
+}
+.member-card {
+  background: #10222B;
+  backdrop-filter: blur(4px);
+  border-radius: 48px 16px 48px 16px;
+  padding: 22px 14px;
+  width: 235px;
+  text-align: center;
+  border: 1px solid rgba(212,175,55,0.3);
+  transition: 0.3s;
+  box-shadow: 0 12px 18px -12px black;
+}
+.member-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--pharaoh-gold);
+  background: #15323f;
+}
+.member-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #F5E5B2;
+}
+.member-role { font-size: 0.75rem; color: var(--pharaoh-gold); font-weight: 700; }
+.member-uni { font-size: 0.7rem; color: #A99260; margin-top: 4px; }
+.member-role-bold {
+  font-size: 0.75rem;
+  background: rgba(212,175,55,0.15);
+  border-radius: 30px;
+  display: inline-block;
+  padding: 3px 12px;
+  margin-top: 8px;
+  color: #E7C669;
+}
+
+/* بطاقات التاريخ والمكان – على هيئة لوحات حجرية */
+.event-info-wrapper {
+  margin: 20px 0 0;
+}
+.event-info-item {
+  background: rgba(15,34,42,0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 28px;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid var(--pharaoh-gold);
+}
+.event-info-val { font-size: 0.9rem; font-weight: 700; color: #EBDCB8; }
+.event-info-val-gold { font-size: 0.9rem; font-weight: 800; color: var(--pharaoh-gold); }
+.map-box {
+  border-radius: 32px;
+  overflow: hidden;
+  border: 2px solid rgba(212,175,55,0.5);
+  box-shadow: 0 12px 20px -12px black;
+  height: 200px;
+  margin-top: 24px;
+}
+
+/* العد التنازلي – برج ساعة فرعوني */
+.countdown-section {
+  background: #08212A;
+  border-radius: 60px;
+  padding: 24px 20px;
+  margin: 36px 0;
+  border: 1px solid #D4AF37;
+  box-shadow: 0 0 20px rgba(212,175,55,0.2);
+}
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.count-box {
+  background: #031016;
+  border-radius: 28px;
+  padding: 12px 16px;
+  min-width: 85px;
+}
+.count-num {
+  font-family: 'Inter', monospace;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--pharaoh-gold);
+  line-height: 1;
+  text-shadow: 0 0 6px #FFD70040;
+}
+.count-label { font-size: 0.7rem; color: #C7B28A; }
+
+/* صندوق التهاني – ورق بردى معاصر */
+.congrats-box {
+  background: #10252E;
+  border-radius: 52px;
+  padding: 34px 28px;
+  margin: 32px 0;
+  border-top: 6px solid var(--pharaoh-gold);
+}
+.congrats-box h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  color: var(--pharaoh-gold);
+  text-align: center;
+  margin-bottom: 28px;
+}
+.input-row input, textarea {
+  background: #1E2F37;
+  border: 1px solid #4A6855;
+  border-radius: 28px;
+  padding: 14px 20px;
+  color: #FDF2DE;
+  font-family: 'Cairo';
+}
+.congrats-btn {
+  background: var(--pharaoh-gold);
+  color: #0A1C22;
+  font-weight: 800;
+  padding: 12px;
+  border-radius: 60px;
+  width: 100%;
+  transition: 0.2s;
+}
+.congrats-btn:hover { background: #c7a520; transform: scale(1.01);}
+.c-item {
+  background: rgba(0,0,0,0.3);
+  border-right: 4px solid var(--pharaoh-gold);
+  border-radius: 28px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.c-name { font-weight: 800; color: #ECC87C; }
+.c-text { color: #F0E2CB; font-size: 0.9rem; line-height: 1.5; }
+.c-meta { direction: ltr; display: flex; gap: 12px; }
+.c-time { font-size: 0.68rem; color: #BBA77A; }
+.c-btn-edit, .c-btn-del { border-radius: 40px; background: transparent; padding: 4px 14px; font-size: 0.7rem; }
+.c-btn-edit { border: 1px solid var(--pharaoh-gold); color: var(--pharaoh-gold);}
+.c-btn-del { border: 1px solid #DE5D5D; color: #F5A3A3;}
+
+/* أزرار المشاركة – تحف فرعونية */
+.share-section {
+  margin: 40px 0 30px;
+}
+.share-buttons {
+  gap: 28px;
+  justify-content: center;
+}
+.share-btn {
+  width: 64px;
+  height: 64px;
+  background: #071C24;
+  border-radius: 50%;
+  border: 1px solid var(--pharaoh-gold);
+  overflow: hidden;
+  transition: 0.2s;
+}
+.share-btn img { width: 100%; height: 100%; object-fit: contain; }
+.share-btn:hover { transform: translateY(-6px); border-color: #F5B81B; background: #10323E; }
+
+.footer-bar {
+  border-top: 1px solid rgba(212,175,55,0.3);
+  padding: 24px 0;
+  text-align: center;
+  margin-top: 32px;
+}
+.footer-bar .copy { font-size: 0.7rem; color: #BAAB85; }
+.footer-bar .copy span { color: var(--pharaoh-gold); font-weight: bold; }
+
+/* تعديلات مسؤولة */
+@media(max-width: 760px) {
+  .header-bar { flex-direction: column; text-align: center; gap: 16px;}
+  .committee-grid { justify-content: center; }
+  .member-card { width: 210px; }
+  .thesis-title { font-size: 1.4rem; }
+  .count-num { font-size: 1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="neural-bg"></div>
+<div class="page-wrapper">
+
+  <div class="header-bar">
+    <div class="uni-info">
+      <div class="uni-name">جامعة الأزهر</div>
+      <div class="uni-sub">كلية التربية بنين بالقاهرة<br>قسم أصول التربية</div>
+    </div>
+    <div class="logos">
+      <div class="logo-circle"><img src="images/uni_logo.png" alt="جامعة الأزهر"><div class="shine"></div></div>
+      <div class="logo-circle gold-ring"><img src="images/college_logo.png" alt="كلية التربية"><div class="shine"></div></div>
+      <div class="logo-circle"><img src="images/dept_logo.png" alt="قسم أصول التربية"><div class="shine"></div></div>
+    </div>
+  </div>
+
+  <div class="invite-title-wrap"><img src="images/invite_text.png" alt="دعوة" class="invite-img"></div>
+
+  <div class="announcement">
+    <p>يسر قسم أصول التربية بكلية التربية بنين بالقاهرة – جامعة الأزهر أن يدعوكم لحضور مناقشة رسالة العالمية <strong>دكتوراه الفلسفة</strong> في التربية، تخصص <strong>(أصول التربية)</strong>، وعنوانها:</p>
+  </div>
+
+  <div class="thesis-card">
+    <div class="thesis-title">
+      استراتيجية مقترحة لتوظيف
+      <br><span class="highlight">روبوتات المحادثة Chatbots</span><br>
+      في التعليم الجامعي بمصر من منظور
+      <br><span class="highlight">فلسفة الذكاء الاصطناعي المسؤول</span>
+    </div>
+  </div>
+
+  <div class="researcher-section">
+    <div class="label" style="color:#BAAB85;">المقدمة من الباحث/</div>
+    <div class="researcher-card">
+      <div class="photo-wrap researcher-size"><img src="images/researcher1.png" alt="محمد فرح"></div>
+      <div class="researcher-name">محمد فرح محمد متولي</div>
+      <div class="researcher-title">المدرس المساعد بقسم أصول التربية</div>
+      <div class="researcher-title">كلية التربية بنين بالقاهرة - جامعة الأزهر</div>
+    </div>
+  </div>
+
+  <div class="section-header"><h3>◈ لجنة الإشراف ◈</h3></div>
+  <div class="committee-grid">
+    <div class="member-card"><div class="photo-wrap member-size"><img src="images/per1.png" alt="مشرف"></div><div class="member-name">أ.د/ أحمد سمير فوزي عبد الله</div><div class="member-role">أستاذ أصول التربية</div><div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div></div>
+    <div class="member-card"><div class="photo-wrap member-size"><img src="images/per2.png" alt="مشرف"></div><div class="member-name">د/ ياسر علي علي عبد الغني</div><div class="member-role">أستاذ تكنولوجيا التعليم المساعد</div><div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div></div>
+    <div class="member-card"><div class="photo-wrap member-size"><img src="images/per3.png" alt="مشرف"></div><div class="member-name">د/ جمال عبد الحميد أحمد عبد السميع</div><div class="member-role">مدرس أصول التربية</div><div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div></div>
+  </div>
+
+  <div class="section-header"><h3>◈ لجنة المناقشة والحكم ◈</h3></div>
+  <div class="committee-grid">
+    <div class="member-card"><div class="photo-wrap member-size"><img src="images/per1.png" alt="مناقش"></div><div class="member-name">أ.د/ أحمد سمير فوزي عبد الله</div><div class="member-role">أستاذ أصول التربية</div><div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div><div class="member-role-bold">(مشرفًا ورئيسًا)</div></div>
+    <div class="member-card"><div class="photo-wrap member-size"><img src="images/perso1.png" alt="مناقش"></div><div class="member-name">أ.د/ محمود عبد اللطيف السيد</div><div class="member-role">أستاذ أصول التربية</div><div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div><div class="member-role-bold">(مشرفًا ورئيسًا)</div></div>
+    <div class="member-card"><div class="photo-wrap member-size"><img src="images/perso2.png" alt="مناقش"></div><div class="member-name">أ.د/ نسمة محمد عبد السلام</div><div class="member-role">أستاذ أصول التربية</div><div class="member-uni">كلية التربية<br>جامعة عين شمس</div><div class="member-role-bold">(مشرفًا ورئيسًا)</div></div>
+    <div class="member-card"><div class="photo-wrap member-size"><img src="images/per2.png" alt="مناقش"></div><div class="member-name">د/ ياسر علي علي عبد الغني</div><div class="member-role">أستاذ تكنولوجيا التعليم المساعد</div><div class="member-uni">كلية التربية بنين بالقاهرة<br>جامعة الأزهر</div><div class="member-role-bold">(مشرفًا ورئيسًا)</div></div>
+  </div>
+
+  <div class="section-header"><h3>◈ موعد المناقشة وموقعها ◈</h3></div>
+  <div class="event-info-wrapper">
+    <div class="event-info-row1" style="display: flex; gap: 18px; flex-wrap: wrap; justify-content: center;">
+      <div class="event-info-item"><div class="event-info-icon date">📅</div><div><span class="event-info-val">يوم الخميس</span><br><span class="event-info-val">17/10/2026</span></div></div>
+      <div class="event-info-item"><div class="event-info-icon time">🕛</div><div><span class="event-info-val">الساعة</span><br><span class="event-info-val">12:00 ظهرًا</span></div></div>
+    </div>
+    <div class="event-info-row2" style="margin-top: 14px; display: flex; justify-content: center;">
+      <div class="event-info-item"><div class="event-info-icon">📍</div><div><span class="event-info-val-gold">كلية التربية بنين بالقاهرة - جامعة الأزهر</span><br><span class="event-info-val">قاعة المناقشات (أ)</span></div></div>
+    </div>
+  </div>
+
+  <div class="map-box">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.158757263557!2d31.31253552474634!3d30.060983517787463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e535c536a25%3A0xe8046d566ecd3e58!2z2YPZhNmK2Kkg2KfZhNiq2LHYqNmK2Kkg2KjZhtmK2YYg2KzYp9mF2LnYqSDYp9mE2KPYstmH2LE!5e0!3m2!1sar!2seg!4v1777125767618!5m2!1sar!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <div style="background: #031016d0; padding: 6px; text-align:center; font-size:0.75rem;">📍 كلية التربية بنين بالقاهرة – جامعة الأزهر</div>
+  </div>
+
+  <div class="section-header"><h3>◈ العد التنازلي للمناقشة ◈</h3></div> 
+  <div class="countdown-section">
+    <div id="countdown-done" class="countdown-done" style="display:none; font-size:1.3rem; color:#D4AF37;">تمت المناقشة بحمد الله وتوفيقه 🎓</div>
+    <div id="countdown-live"><div class="countdown-grid"><div class="count-box"><span class="count-num" id="days">00</span><span class="count-label">أيام</span></div><div class="count-box"><span class="count-num" id="hours">00</span><span class="count-label">ساعة</span></div><div class="count-box"><span class="count-num" id="minutes">00</span><span class="count-label">دقيقة</span></div><div class="count-box"><span class="count-num" id="seconds">00</span><span class="count-label">ثانية</span></div></div></div>
+  </div>
+
+  <div class="congrats-box">
+    <h4>◈ اكتب تهنئة للباحث ◈</h4>
+    <div class="input-row"><input id="congrats-name" type="text" placeholder="اسمك.. (اختياري)"></div>
+    <textarea id="congrats-text" placeholder="اكتب تهنئتك هنا..."></textarea>
+    <div class="congrats-send-row" style="margin-top: 12px;"><button class="congrats-btn" onclick="submitCongrats()">إرسال</button></div>
+    <div id="congrats-count" style="font-size:0.75rem; text-align:center; margin:12px 0; color:#BBA77A;"></div>
+    <div id="congrats-list"></div>
+  </div>
+
+  <div class="share-section">
+    <div class="share-title" style="text-align:center; letter-spacing:2px;">◈ شارك الدعوة ◈</div>
+    <div class="share-buttons"><a class="share-btn" href="#" onclick="shareOn('facebook');return false;"><img src="images/facebook.png"></a><a class="share-btn" href="#" onclick="shareOn('whatsapp');return false;"><img src="images/whatsapp.png"></a><a class="share-btn" href="#" onclick="shareOn('x');return false;"><img src="images/x.png"></a><a class="share-btn" href="#" onclick="shareOn('telegram');return false;"><img src="images/telegram.png"></a></div>
+  </div>
+
+  <div class="admin-wrap"><div id="admin-status" style="margin-bottom: 8px; font-size:0.7rem;"></div><button id="admin-toggle-btn" onclick="showAdminLogin()" style="background:#0C212B; border:1px solid #D4AF37; color:#D4AF37; border-radius:60px; padding:4px 24px;">⚙️ إدارة</button><div id="admin-login-box" style="display:none; margin-top:16px; background:#0F2029; border-radius:32px; padding:18px; max-width:340px;margin: auto;"><p style="color:#D4AF37;">🔐 دخول المدير</p><input id="admin-pass-input" type="password" placeholder="كلمة السر..." onkeydown="if(event.key==='Enter') adminLogin()" style="background:#1B2E39; border-radius:40px; padding:8px; width:100%;"><p id="admin-pass-error" style="display:none; color:#F5A3A3;">❌ كلمة السر غير صحيحة</p><div style="display:flex; gap:12px;"><button onclick="adminLogin()" style="background:#D4AF37; color:black;">دخول</button><button onclick="cancelAdminLogin()">إلغاء</button></div></div></div>
+
+  <div class="footer-bar"><div class="copy">جميع حقوق الفكرة والبرمجة محفوظة © <span>محمد فرح 2026</span></div></div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  const firebaseConfig = { apiKey: "AIzaSyA5xYXrZrrwA6ws8WRyMr2dIHXlWBVn3FE", authDomain: "aaaaaa-5b453.firebaseapp.com", databaseURL: "https://aaaaaa-5b453-default-rtdb.europe-west1.firebasedatabase.app", projectId: "aaaaaa-5b453", storageBucket: "aaaaaa-5b453.firebasestorage.app", messagingSenderId: "722031681124", appId: "1:722031681124:web:0d45ca14b0413d9954c971" };
+  const ADMIN_PASSWORD = "333555";
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const congratsRef = ref(db, "congrats");
+  let myToken = localStorage.getItem("congrats_token");
+  if (!myToken) { myToken = "tk_" + Math.random().toString(36).slice(2) + Date.now(); localStorage.setItem("congrats_token", myToken); }
+  let isAdmin = sessionStorage.getItem("admin_logged") === "yes";
+  window.submitCongrats = function () { const name = document.getElementById("congrats-name").value.trim() || "زائر"; const text = document.getElementById("congrats-text").value.trim(); if (!text) { alert("من فضلك اكتب التهنئة"); return; } push(congratsRef, { name, text, time: new Date().toLocaleString("ar-EG"), ts: Date.now(), token: myToken }); document.getElementById("congrats-name").value = ""; document.getElementById("congrats-text").value = ""; };
+  window.deleteCongrats = function (id, token) { if (token !== myToken && !isAdmin) return; if (confirm("حذف التهنئة؟")) remove(ref(db, "congrats/" + id)); };
+  window.editCongrats = function (id, oldText, token) { if (token !== myToken) return; const overlay = document.createElement("div"); overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;"; const box = document.createElement("div"); box.style.cssText = "background:#10252E;border-radius:48px;padding:28px;width:90%;max-width:460px;border-top:6px solid #D4AF37;"; const ta = document.createElement("textarea"); ta.value = oldText; ta.style.cssText = "width:100%;background:#1E2F37; border-radius:32px; padding:16px;color:white;"; const save = document.createElement("button"); save.innerText = "حفظ"; save.style.cssText = "background:#D4AF37; border:none; border-radius:40px; padding:8px 24px; margin-top:14px;"; const cancel = document.createElement("button"); cancel.innerText = "إلغاء"; cancel.style.cssText = "background:#6B4C2A; border-radius:40px; padding:8px 20px; margin-top:14px; margin-right:10px;"; save.onclick = () => { if(ta.value.trim()) update(ref(db, "congrats/" + id), { text: ta.value.trim(), edited: true }); document.body.removeChild(overlay); }; cancel.onclick = () => document.body.removeChild(overlay); box.appendChild(ta); const divBtn = document.createElement("div"); divBtn.appendChild(save); divBtn.appendChild(cancel); box.appendChild(divBtn); overlay.appendChild(box); document.body.appendChild(overlay); };
+  function renderList(snap) { const container = document.getElementById("congrats-list"); const countEl = document.getElementById("congrats-count"); while(container.firstChild) container.removeChild(container.firstChild); if (!snap || !snap.exists()) { const p = document.createElement("p"); p.textContent = "كن أول من يهنئ الباحث 🎉"; p.style.cssText = "text-align:center;color:#BBA77A;padding:16px;"; container.appendChild(p); countEl.textContent = ""; return; } const items = []; snap.forEach(c => { let v=c.val(); v._id=c.key; items.push(v); }); items.reverse(); countEl.textContent = "◈ عدد التعليقات: " + items.length + " ◈"; items.forEach(c => { const wrap = document.createElement("div"); wrap.className = "c-item"; const nameSpan = document.createElement("div"); nameSpan.className = "c-name"; nameSpan.textContent = "👤 " + (c.name || "زائر"); wrap.appendChild(nameSpan); const textDiv = document.createElement("div"); textDiv.className = "c-text"; textDiv.textContent = c.text; wrap.appendChild(textDiv); const meta = document.createElement("div"); meta.className = "c-meta"; const timeSpan = document.createElement("span"); timeSpan.className = "c-time"; timeSpan.textContent = c.time || ""; meta.appendChild(timeSpan); if(c.edited){ const ed = document.createElement("span"); ed.textContent = "· (معدّل)"; meta.appendChild(ed); } wrap.appendChild(meta); if(c.token === myToken || isAdmin){ const btns = document.createElement("div"); btns.style.display = "flex"; btns.style.gap = "12px"; btns.style.justifyContent = "center"; btns.style.marginTop = "10px"; if(c.token === myToken){ const editBtn = document.createElement("button"); editBtn.textContent = "✏️ تعديل"; editBtn.className = "c-btn-edit"; editBtn.onclick = () => window.editCongrats(c._id, c.text, c.token); btns.appendChild(editBtn); } const delBtn = document.createElement("button"); delBtn.textContent = "🗑️ حذف"; delBtn.className = "c-btn-del"; delBtn.onclick = () => window.deleteCongrats(c._id, c.token); btns.appendChild(delBtn); wrap.appendChild(btns); } container.appendChild(wrap); }); }
+  onValue(congratsRef, snap => renderList(snap));
+  function updateAdminUI() { document.getElementById("admin-status").innerHTML = '<span style="color:#2ecc71;">✅ مدير – يمكنك حذف أي تعليق</span> <button onclick="adminLogout()" style="background:#9B2E2E; border:none;border-radius:30px;padding:2px 16px;">تسجيل خروج</button>'; document.getElementById("admin-toggle-btn").style.display = "none"; }
+  window.adminLogin = function () { const pass = document.getElementById("admin-pass-input").value; if(pass === ADMIN_PASSWORD) { isAdmin = true; sessionStorage.setItem("admin_logged","yes"); document.getElementById("admin-login-box").style.display = "none"; updateAdminUI(); onValue(congratsRef, snap => renderList(snap)); } else { document.getElementById("admin-pass-error").style.display = "block"; } };
+  window.adminLogout = () => { isAdmin = false; sessionStorage.removeItem("admin_logged"); document.getElementById("admin-status").innerHTML = ""; document.getElementById("admin-toggle-btn").style.display = "inline-block"; onValue(congratsRef, snap => renderList(snap)); };
+  window.showAdminLogin = function () { document.getElementById("admin-login-box").style.display = "block"; document.getElementById("admin-toggle-btn").style.display = "none"; };
+  window.cancelAdminLogin = function () { document.getElementById("admin-login-box").style.display = "none"; document.getElementById("admin-toggle-btn").style.display = "inline-block"; document.getElementById("admin-pass-input").value = ""; document.getElementById("admin-pass-error").style.display = "none"; };
+  if (isAdmin) setTimeout(updateAdminUI, 200);
+</script>
+
+<script>
+  const targetDate = new Date('2026-10-17T12:00:00').getTime();
+  function updateCountdown(){ const now=Date.now(), diff=targetDate-now; if(diff<=0){ document.getElementById('countdown-live').style.display='none'; document.getElementById('countdown-done').style.display='block'; return; } document.getElementById('days').innerText=Math.floor(diff/86400000).toString().padStart(2,'0'); document.getElementById('hours').innerText=Math.floor((diff%86400000)/3600000).toString().padStart(2,'0'); document.getElementById('minutes').innerText=Math.floor((diff%3600000)/60000).toString().padStart(2,'0'); document.getElementById('seconds').innerText=Math.floor((diff%60000)/1000).toString().padStart(2,'0'); }
+  setInterval(updateCountdown,1000); updateCountdown();
+  function shareOn(p){ const url=window.location.href; const text="تصفح الدعوة الإلكترونية لمناقشة رسالة الدكتوراه - محمد فرح متولي"; let s=''; if(p==='facebook') s='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url); if(p==='x') s='https://twitter.com/intent/tweet?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text); if(p==='whatsapp') s='https://api.whatsapp.com/send?text='+encodeURIComponent(text+' '+url); if(p==='telegram') s='https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text); window.open(s,'_blank'); }
+  window.shareOn = shareOn;
+</script>
+</body>
+</html>
