@@ -160,14 +160,15 @@ body::before {
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude; pointer-events:none;
 }
-.thesis-title {
+
+	.thesis-title {
   font-family: 'Lateef', 'Amiri', serif;
-  font-size: 1.85rem;
+  font-size: 2rem;   /* 👈 تكبير الخط */
+  line-height: 1.25;   /* 👈 تقليل المسافة بين السطور */
   font-weight: 700;
-  color: var(--text-dark);
-  line-height: 1.55;
   letter-spacing: 0.01em;
 }
+	
 .highlight {
   background: linear-gradient(135deg, var(--accent-gold), var(--accent-rose));
   -webkit-background-clip: text; background-clip: text;
