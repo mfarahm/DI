@@ -439,6 +439,17 @@ body::before {
   color: var(--text-mid);
 }
 
+#admin-notify{
+  margin: 6px 0 10px;
+  padding: 10px 14px;
+  text-align:center;
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #b5870a;
+  background: rgba(181,135,10,0.10);
+  border: 1px solid rgba(181,135,10,0.25);
+  border-radius: 18px;
+}
 
 </style>
 </head>
@@ -469,7 +480,7 @@ body::before {
   <div class="map-box"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.158757263557!2d31.31253552474634!3d30.060983517787463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e535c536a25%3A0xe8046d566ecd3e58!2z2YPZhNmK2Kkg2KfZhNiq2LHYqNmK2Kkg2KjZhtmK2YYg2KzYp9mF2LnYqSDYp9mE2KPYstmH2LE!5e0!3m2!1sar!2seg!4v1777125767618!5m2!1sar!2seg" allowfullscreen></iframe><div class="map-label">📍 كلية التربية بنين بالقاهرة – جامعة الأزهر</div></div>
   <div class="section-header"><h3>◈ العد التنازلي للمناقشة ◈</h3></div>
   <div class="countdown-section"><div id="countdown-done" style="display:none;text-align:center;padding:12px;color:var(--accent-gold);font-weight:700;">تمت المناقشة بحمد الله وتوفيقه 🎓</div><div id="countdown-live"><div class="countdown-grid"><div class="count-box"><span class="count-num" id="days">00</span><span class="count-label">أيام</span></div><div class="count-box"><span class="count-num" id="hours">00</span><span class="count-label">ساعة</span></div><div class="count-box"><span class="count-num" id="minutes">00</span><span class="count-label">دقيقة</span></div><div class="count-box"><span class="count-num" id="seconds">00</span><span class="count-label">ثانية</span></div></div></div></div>
-  <div class="congrats-box"><h4>◈ اكتب تهنئة للباحث ◈</h4><div class="input-row"><input id="congrats-name" type="text" placeholder="اسمك.. (اختياري)"></div><textarea id="congrats-text" placeholder="اكتب تهنئتك هنا..."></textarea><div class="congrats-send-row"><button class="congrats-btn" onclick="submitCongrats()">إرسال</button></div><div id="congrats-count"></div><div id="congrats-list"></div></div>
+  <div class="congrats-box"><h4>◈ اكتب تهنئة للباحث ◈</h4><div class="input-row"><input id="congrats-name" type="text" placeholder="اسمك.. (اختياري)"></div><textarea id="congrats-text" placeholder="اكتب تهنئتك هنا..."></textarea><div class="congrats-send-row"><button class="congrats-btn" onclick="submitCongrats()">إرسال</button></div><div id="congrats-count"></div><div id="admin-notify"></div><div id="congrats-list"></div></div>
   <div class="visits-bar">👁️ عدد الزيارات: <span id="visits-count">—</span></div>
   <div class="share-section"><div class="share-title">◈ شارك الدعوة ◈</div><div class="share-buttons"><a class="share-btn" href="#" onclick="shareOn('facebook');return false;"><img src="images/facebook.png" alt="Facebook"></a><a class="share-btn" href="#" onclick="shareOn('whatsapp');return false;"><img src="images/whatsapp.png" alt="WhatsApp"></a><a class="share-btn" href="#" onclick="shareOn('x');return false;"><img src="images/x.png" alt="X"></a><a class="share-btn" href="#" onclick="shareOn('telegram');return false;"><img src="images/telegram.png" alt="Telegram"></a></div></div>
   <div class="footer-bar"><div class="copy">جميع حقوق الفكرة والبرمجة محفوظة © <span>محمد فرح 2026</span></div><div class="footer-contact"><span class="contact-label">للتواصل:</span><a href="https://www.facebook.com/mfarahmetwally" target="_blank" class="fb-link">Facebook</a></div></div>
@@ -486,6 +497,7 @@ body::before {
   const db = getDatabase(app);
   const congratsRef = ref(db, "congrats");
   const visitsRef = ref(db, "visits");
+	let adminSeenStats = { comments: 0, replies: 0 };
 
   (function() { if (!sessionStorage.getItem("visit_counted_v1")) { sessionStorage.setItem("visit_counted_v1","1"); get(visitsRef).then(snap => { let c = snap.exists() ? (snap.val()||0) : 0; set(visitsRef, c+1); }); } onValue(visitsRef, snap => { document.getElementById("visits-count").textContent = snap.exists() ? snap.val().toLocaleString("ar-EG") : "0"; }); })();
 
@@ -687,6 +699,31 @@ if (diff < 60) {
     let countEl = document.getElementById("congrats-count"); while(container.firstChild) container.removeChild(container.firstChild);
     if(!snap || !snap.exists()) { let p=document.createElement("p"); p.style.cssText="text-align:center;color:#6e7a9c;padding:18px;"; p.textContent="كن أول من يهنئ الباحث 🎉"; container.appendChild(p); if(countEl) countEl.textContent=""; return; }
     let items=[]; snap.forEach(c=>{ let v=c.val(); v._id=c.key; items.push(v); }); items.reverse();
+		let notify = document.getElementById("admin-notify");
+
+if (isAdmin && notify) {
+  let replyCount = 0;
+
+  for (let c of items) {
+    if (c.replies) replyCount += Object.keys(c.replies).length;
+  }
+
+let newComments = Math.max(0, items.length - adminSeenStats.comments);
+let newReplies = Math.max(0, replyCount - adminSeenStats.replies);
+
+// ❗ تجاهل النقص الناتج عن الحذف
+newComments = Math.max(newComments, 0);
+newReplies = Math.max(newReplies, 0);
+
+  if (newComments < 0) newComments = 0;
+  if (newReplies < 0) newReplies = 0;
+
+notify.innerHTML =
+  `🔥 <span style="color:#c0454a;font-weight:900;">${newComments}</span> تعليق - ` +
+  `💬 <span style="color:#2a5ea8;font-weight:900;">${newReplies}</span> رد ` +
+  `<span style="color:#6e7a9c;font-weight:600;">(منذ آخر تسجيل خروج)</span>`;
+}
+
     let totalCount=items.length; for(let c of items) if(c.replies) totalCount+=Object.keys(c.replies).length;
     if(countEl) countEl.textContent="◈ عدد التعليقات: "+totalCount+" ◈";
     let liked=getLikedSet();
@@ -868,8 +905,62 @@ setTimeout(()=>{
   onValue(congratsRef, snap=>renderList(snap));
 
   function updateAdminUI(){ document.getElementById("admin-status").innerHTML='<span style="color:#1a7a6e;">✅ أنت مسجل كمدير</span> <button onclick="adminLogout()" style="background:rgba(192,69,74,0.12);border:1px solid #c0454a;color:#c0454a;border-radius:36px;padding:3px 10px;font-size:.68rem;cursor:pointer;">تسجيل خروج</button>'; document.getElementById("admin-toggle-btn").style.display="none"; }
-  window.adminLogin=function(){ let pass=document.getElementById("admin-pass-input").value; if(pass===ADMIN_PASSWORD){ isAdmin=true; sessionStorage.setItem("admin_logged","yes"); document.getElementById("admin-login-box").style.display="none"; document.getElementById("admin-pass-error").style.display="none"; updateAdminUI(); onValue(congratsRef, snap=>renderList(snap)); } else { document.getElementById("admin-pass-error").style.display="block"; } };
-  window.adminLogout=function(){ isAdmin=false; sessionStorage.removeItem("admin_logged"); document.getElementById("admin-status").innerHTML=""; document.getElementById("admin-toggle-btn").style.display="inline-block"; onValue(congratsRef, snap=>renderList(snap)); };
+window.adminLogin = function () {
+  let pass = document.getElementById("admin-pass-input").value;
+
+  if (pass === ADMIN_PASSWORD) {
+
+    isAdmin = true;
+    sessionStorage.setItem("admin_logged", "yes");
+
+    document.getElementById("admin-login-box").style.display = "none";
+    document.getElementById("admin-pass-error").style.display = "none";
+
+    updateAdminUI();
+
+    // 🔥 حساب الحالة الحالية
+    get(congratsRef).then(snap => {
+      let comments = 0;
+      let replies = 0;
+
+      if (snap.exists()) {
+        snap.forEach(c => {
+          comments++;
+          let v = c.val();
+          if (v.replies) replies += Object.keys(v.replies).length;
+        });
+      }
+
+      adminSeenStats = { comments, replies };
+    });
+
+    onValue(congratsRef, snap => renderList(snap));
+
+    // 🔽 سكرول إلى الإشعار
+    setTimeout(() => {
+      let notify = document.getElementById("admin-notify");
+      if (notify) {
+        notify.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 300);
+
+  } else {
+    document.getElementById("admin-pass-error").style.display = "block";
+  }
+};
+
+  window.adminLogout = function () {
+  isAdmin = false;
+  sessionStorage.removeItem("admin_logged");
+
+  // 🔴 تصفير النقطة المرجعية
+  adminSeenStats = { comments: 0, replies: 0 };
+
+  document.getElementById("admin-status").innerHTML = "";
+  document.getElementById("admin-toggle-btn").style.display = "inline-block";
+
+  onValue(congratsRef, snap => renderList(snap));
+};	
   window.showAdminLogin = function() {
   let box = document.getElementById("admin-login-box");
 
