@@ -721,7 +721,7 @@ newReplies = Math.max(newReplies, 0);
 notify.innerHTML =
   `🔥 <span style="color:#c0454a;font-weight:900;">${newComments}</span> تعليق - ` +
   `💬 <span style="color:#2a5ea8;font-weight:900;">${newReplies}</span> رد ` +
-  `<span style="color:#6e7a9c;font-weight:600;">(منذ آخر تسجيل خروج)</span>`;
+  `<span style="color:#6e7a9c;font-weight:600;">(منذ آخر خروج)</span>`;
 }
 
     let totalCount=items.length; for(let c of items) if(c.replies) totalCount+=Object.keys(c.replies).length;
