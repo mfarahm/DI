@@ -205,7 +205,7 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
   line-height: 1;
   font-family: serif;
 }
-  
+
 .tc-stripe {  
   width: 80px; height: 3px; margin: 0 auto 20px;
   background: linear-gradient(90deg, var(--teal-mid), var(--gold-mid), var(--rose-mid));
@@ -782,10 +782,11 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
   const cv = document.getElementById('confetti');
   const cx = cv.getContext('2d');
   const COLORS = [
-    '#d4a843','#8b6914','#b8922a','#f0d898',
-    '#2e7d70','#4da090','#cce8e3',
-    '#a04550','#f5dde0',
-    '#ede0c4','#c8b070'
+   '#FFD166', '#FF9F1C', // برتقالي وذهبي زاهي
+    '#EF476F', '#FF6B6B', // وردي وأحمر مرح
+    '#06D6A0', '#118AB2', // فيروزي وأزرق
+    '#FCF6BD', '#D0F4DE', // أصفر فاتح وأخضر نعناعي
+    '#C77DFF', '#7209B7'  // بنفسجي لامع
   ];
   const SH = ['rect','circle','diamond'];
   let W, H, pieces = [];
@@ -796,7 +797,7 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
   function mkPiece(){
     return {
       x: Math.random()*W, y:-14,
-      sz: Math.random()*6+4,
+      sz: Math.random()*4+2,
       col: COLORS[Math.floor(Math.random()*COLORS.length)],
       sh: SH[Math.floor(Math.random()*SH.length)],
       vx: (Math.random()-.5)*1.0,
@@ -843,7 +844,48 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
 
   function loop(){ update(); draw(); requestAnimationFrame(loop); }
 
-  burst(100); loop();
+  // دالة خاصة لجعل القطع تتلاشى تدريجياً
+  let globalAlpha = 0.9;
+  let fadingStarted = false;
+
+  // دالة التلاشي العادية
+  function fadeAndLoop() {
+    if (fadingStarted && globalAlpha > 0.05) {
+      globalAlpha -= 0.012; // التلاشي بشكل أسرع قليلاً
+      for(let p of pieces) {
+        p.op = globalAlpha * (Math.random() * 0.5 + 0.5);
+      }
+    }
+    update();
+    draw();
+    requestAnimationFrame(fadeAndLoop);
+  }
+
+  // نبدأ بكمية قليلة (30 قطعة فقط)
+  burst(70);
+  // نبدأ الحلقة (بدون تلاشي في البداية)
+  fadeAndLoop();
+
+  // بعد 25-30 ثانية: نبدأ التلاشي
+  const fadeDelay = 55000 + (Math.random() * 5000); // 25-30 ثانية
+  setTimeout(() => {
+    fadingStarted = true;
+  }, fadeDelay);
+
+  // كل دقيقة: نظف القطع القديمة وأضف دفعة جديدة مع تأخير التلاشي مرة أخرى
+  setInterval(() => {
+    pieces = []; // إزالة القديمة
+    globalAlpha = 0.9; // إعادة الشفافية
+    fadingStarted = false; // إيقاف التلاشي مؤقتاً
+    burst(78); // كمية خفيفة
+    for(let p of pieces) {
+      p.op = globalAlpha * (Math.random() * 0.5 + 0.5);
+    }
+    // إعادة جدولة التلاشي بعد 25-30 ثانية مرة أخرى
+    setTimeout(() => {
+      fadingStarted = true;
+    }, fadeDelay);
+  }, 60000);	
   setInterval(()=>burst(65), 60000);
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden) burst(80); });
 })();
