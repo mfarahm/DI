@@ -205,8 +205,8 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
   line-height: 1;
   font-family: serif;
 }
-.thesis-card::before { content: '❧'; top:12px; right:18px; }
-.thesis-card::after  { content: '❧'; bottom:12px; left:18px; transform: scaleX(-1); }
+.thesis-card::before { content: '❞'; top:12px; right:18px; }
+.thesis-card::after  { content: '❝'; bottom:-5px; left:18px; }
 
 .tc-stripe {
   width: 80px; height: 3px; margin: 0 auto 20px;
@@ -555,7 +555,7 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
 /* ── Responsive ── */
 @media(max-width:768px){
   .header-bar { flex-direction:column; gap:14px; text-align:center; }
-  .thesis-title { font-size:1.25rem; }
+  .thesis-title { font-size:1.78rem; }
   .count-box { min-width:62px; padding:11px 10px; }
   .count-num { font-size:1.65rem; }
 }
@@ -582,6 +582,7 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
   </div>
 
   <div class="invite-title-wrap"><img src="images/invite_text.png" alt="دعوة" class="invite-img"></div>
+
   <!-- ANNOUNCEMENT -->
   <div class="announcement">
     <p>يسر قسم أصول التربية بكلية التربية بنين بالقاهرة – جامعة الأزهر أن يدعوكم لحضور مناقشة رسالة العالمية <strong>دكتوراه الفلسفة</strong> في التربية، تخصص <strong style="color:var(--teal-deep);">(أصول التربية)</strong>، وعنوانها:</p>
@@ -589,14 +590,12 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
 
   <!-- THESIS CARD -->
   <div class="thesis-card">
-    <div class="tc-stripe"></div>
     <div class="thesis-title">
       استراتيجية مقترحة لتوظيف<br>
       <span class="highlight">روبوتات المحادثة Chatbots</span><br>
       في التعليم الجامعي بمصر من منظور<br>
       <span class="highlight">فلسفة الذكاء الاصطناعي المسؤول</span>
     </div>
-    <div class="tc-stripe tc-stripe-b"></div>
   </div>
 
   <!-- RESEARCHER -->
