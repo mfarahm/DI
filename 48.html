@@ -735,7 +735,7 @@ canvas#confetti { position:fixed; inset:0; pointer-events:none; z-index:999; }
     <div class="event-info-row1">
       <div class="event-info-item">
         <div class="event-info-icon">📅</div>
-        <div><span class="event-info-val">يوم الخميس</span><br><span class="event-info-val">2026/10/1</span></div>
+        <div><span class="event-info-val">الخميس</span><br><span class="event-info-val">2026/10/1</span></div>
       </div>
       <div class="event-info-item">
         <div class="event-info-icon">🕛</div>
@@ -954,7 +954,7 @@ for(let i=0;i<28;i++){
 
 <!-- ══ COUNTDOWN ══ -->
 <script>
-let target=new Date('2026-10-17T12:00:00').getTime();
+let target=new Date('2026-10-01T12:00:00').getTime();
 function updateCountdown(){
   let diff=target-Date.now();
   if(diff<=0){ document.getElementById('countdown-live').style.display='none'; document.getElementById('countdown-done').style.display='block'; return; }
